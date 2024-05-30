@@ -1,0 +1,64 @@
+name: Release obsidian plugin
+
+on:
+    workflow_dispatch:
+        inputs:
+            bump:
+                default: false
+                description: "Bump version based on semantic release"
+                type: boolean
+                required: false
+            beta:
+                default: false
+                description: "Make a beta release"
+                type: boolean
+                required: false
+    push:
+        tags:
+            - "*"
+permissions:
+    contents: write
+
+jobs:
+    echo:
+        runs-on: ubuntu-latest
+        outputs:
+            STYLE: ${{ steps.style.outputs.STYLE }}
+        steps:
+            - name: echo
+              run: |
+                  echo EVENT NAME =  ${{ github.event_name }}
+                  echo BETA = ${{ inputs.beta || false}}
+                  echo BUMP = ${{ inputs.bump || false}}
+            - name: Style exists
+              id: style
+              run: |
+                  if [ -f "styles.css" ] || [ -f "src/styles.css"]; then
+                      echo "STYLE=true" >> "$GITHUB_OUTPUT"
+                  else
+                      echo "STYLE=false" >> "$GITHUB_OUTPUT"
+                  fi
+    release:
+        if: (github.event_name == 'push') || (github.event_name == 'workflow_dispatch' && !inputs.bump)
+        uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-release.yaml@main
+        needs: echo
+        
+        with:
+          PLUGIN_NAME: <%= data.id %> 
+          STYLE: ${{ needs.echo.outputs.STYLE }}
+          CACHE: "pnpm"
+        secrets:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          
+    bump-version-and-release:
+        if: ${{ inputs.bump }}
+        needs: echo
+        uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-bump-version.yaml@main
+        with:
+            PLUGIN_NAME: <%= data.id %>
+            STYLE: ${{ needs.echo.outputs.STYLE }}
+            BETA: ${{ inputs.beta }}
+            CACHE: "pnpm"
+        secrets:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
