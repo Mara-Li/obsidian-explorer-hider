@@ -24,7 +24,7 @@
 To add a translation:
 1. Fork the repository
 2. Add the translation in the `src/i18n/locales` folder with the name of the language (ex: `fr.json`). 
-    - You can get your locale language from Obsidian using [obsidian translation](https://github.com/obsidianmd/obsidian-translations) or using the commands (in templater for example) : `<% tp.obsidian.moment.locale() %>`
+    - You can get your locale language from Obsidian using [obsidian translation](https://github.com/obsidianmd/obsidian-translations) or using the commands (in templater for example) : `{{TEMPLATE_PLACEHOLDER LOCALE}}`
     - Copy the content of the [`en.json`](./src/i18n/locales/en.json) file in the new file
     - Translate the content
 3. Edit `i18n/i18next.ts` :

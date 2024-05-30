@@ -107,7 +107,7 @@
 			"include": [
 				"*.json"
 			]
-		},
+		}
 	],
 	"formatter": {
 		"enabled": true,
