@@ -44,7 +44,7 @@ jobs:
         needs: echo
         
         with:
-          PLUGIN_NAME: <%= data.id %> 
+          PLUGIN_NAME: explorer-hidder 
           STYLE: ${{ needs.echo.outputs.STYLE }}
           CACHE: "pnpm"
         secrets:
@@ -56,7 +56,7 @@ jobs:
         needs: echo
         uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-bump-version.yaml@main
         with:
-            PLUGIN_NAME: <%= data.id %>
+            PLUGIN_NAME: explorer-hidder
             STYLE: ${{ needs.echo.outputs.STYLE }}
             BETA: ${{ inputs.beta }}
             CACHE: "pnpm"
