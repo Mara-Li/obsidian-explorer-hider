@@ -1,7 +1,7 @@
 {
   "name": "explorer-hidder",
   "version": "1.0.0",
-  "description": "Hide a file or a folder from the explorer using a little bit of CSS!",
+  "description": "Hide a file/folder from the explorer with only a bit of CSS.",
   "main": "main.js",
   "scripts": {
     "prebuild": "tsc --noEmit --skipLibCheck",

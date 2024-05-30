@@ -6,5 +6,6 @@
 	"description": "Hide a file or a folder from the explorer using a little bit of CSS!",
 	"author": "Mara-Li",
 	"authorUrl": "https//github.com/Mara-Li",
-	"isDesktopOnly": false
+	"isDesktopOnly": false,
+	"fundingUrl": "https://ko-fi.com/mara__li"
 }
