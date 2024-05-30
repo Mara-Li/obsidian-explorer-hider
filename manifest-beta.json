@@ -1,8 +1,8 @@
 {
 	"id": "explorer-hidder",
 	"name": "Explorer Hidder",
-	"version": "1.0.0",
-	"minAppVersion": "0.15.0",
+	"version": "0.0.0",
+	"minAppVersion": "1.5.12",
 	"description": "Hide a file or a folder from the explorer using a little bit of CSS!",
 	"author": "Mara-Li",
 	"authorUrl": "https//github.com/Mara-Li",
