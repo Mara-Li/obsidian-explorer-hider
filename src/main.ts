@@ -2,21 +2,23 @@ import { Editor, MarkdownView, Notice, Plugin, Modal } from "obsidian";
 
 import { ExplorerHidderSettingTab } from "./settings";
 import { ExplorerHidderModal } from "./modals";
-import { ExplorerHidderSettings, DEFAULT_SETTINGS } from "./interfaces";
-
-// Remember to rename these classes and interfaces!
+import { ExplorerHidderSettings, DEFAULT_SETTINGS } from "./interface";
 
 export default class ExplorerHidder extends Plugin {
-	settings: ExplorerHidderSettings;
+	settings!: ExplorerHidderSettings;
 
 	async onload() {
 		await this.loadSettings();
 
 		// This creates an icon in the left ribbon.
-		const ribbonIconEl = this.addRibbonIcon("dice", "Sample Plugin", (evt: MouseEvent) => {
-			// Called when the user clicks the icon.
-			new Notice("This is a notice!");
-		});
+		const ribbonIconEl = this.addRibbonIcon(
+			"dice",
+			"Sample Plugin",
+			(evt: MouseEvent) => {
+				// Called when the user clicks the icon.
+				new Notice("This is a notice!");
+			}
+		);
 		// Perform additional things with the ribbon
 		ribbonIconEl.addClass("my-plugin-ribbon-class");
 
@@ -30,7 +32,7 @@ export default class ExplorerHidder extends Plugin {
 			name: "Open sample modal (simple)",
 			callback: () => {
 				new ExplorerHidderModal(this.app).open();
-			}
+			},
 		});
 		// This adds an editor command that can perform some operation on the current editor instance
 		this.addCommand({
@@ -39,7 +41,7 @@ export default class ExplorerHidder extends Plugin {
 			editorCallback: (editor: Editor, view: MarkdownView) => {
 				console.log(editor.getSelection());
 				editor.replaceSelection("Sample Editor Command");
-			}
+			},
 		});
 		// This adds a complex command that can check whether the current state of the app allows execution of the command
 		this.addCommand({
@@ -58,7 +60,7 @@ export default class ExplorerHidder extends Plugin {
 					// This command will only show up in Command Palette when the check function returns true
 					return true;
 				}
-			}
+			},
 		});
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
@@ -71,7 +73,9 @@ export default class ExplorerHidder extends Plugin {
 		});
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
-		this.registerInterval(window.setInterval(() => console.log("setInterval"), 5 * 60 * 1000));
+		this.registerInterval(
+			window.setInterval(() => console.log("setInterval"), 5 * 60 * 1000)
+		);
 	}
 
 	onunload() {
@@ -86,5 +90,3 @@ export default class ExplorerHidder extends Plugin {
 		await this.saveData(this.settings);
 	}
 }
-
-
