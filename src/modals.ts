@@ -1,6 +1,6 @@
 import { App, Modal } from "obsidian";
 
-export class <%= data.interfaceName%>Modal extends Modal {
+export class ExplorerHidderModal extends Modal {
 	constructor(app: App) {
 		super(app);
 	}

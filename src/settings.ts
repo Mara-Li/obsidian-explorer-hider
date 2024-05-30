@@ -1,10 +1,10 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
-import <%= data.interfaceName %> from "./main";
+import ExplorerHidder from "./main";
 
-export class <%= data.interfaceName %>SettingTab extends PluginSettingTab {
-	plugin: <%= data.interfaceName %>;
+export class ExplorerHidderSettingTab extends PluginSettingTab {
+	plugin: ExplorerHidder;
 
-	constructor(app: App, plugin: <%= data.interfaceName %>) {
+	constructor(app: App, plugin: ExplorerHidder) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}

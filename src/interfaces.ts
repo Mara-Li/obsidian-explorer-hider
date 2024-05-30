@@ -1,9 +1,9 @@
 
 
-export interface <%= data.interfaceName %>Settings {
+export interface ExplorerHidderSettings {
 	mySetting: string;
 }
 
-export const DEFAULT_SETTINGS: <%= data.interfaceName %>Settings = {
+export const DEFAULT_SETTINGS: ExplorerHidderSettings = {
 	mySetting: "default"
 };
