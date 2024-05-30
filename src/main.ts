@@ -8,6 +8,7 @@ export default class ExplorerHidder extends Plugin {
 	settings!: ExplorerHidderSettings;
 
 	async onload() {
+		console.log(`[${this.manifest.name}] loaded`);
 		await this.loadSettings();
 
 		// This creates an icon in the left ribbon.
@@ -79,7 +80,7 @@ export default class ExplorerHidder extends Plugin {
 	}
 
 	onunload() {
-		console.log("unloading plugin");
+		console.log(`[${this.manifest.name}] unloaded`);
 	}
 
 	async loadSettings() {
