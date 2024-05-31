@@ -1,10 +1,4 @@
-# Changelog
-
-All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
-
 ## 1.0.0 (2024-05-31)
-
-
 ### Features
 
 * allow discrimination between bookmarks & explorer for all rules ([2fcfae4](https://github.com/Mara-Li/obsidian-explorer-hidder/commit/2fcfae49b4c0610845023ea06a718768a5061d9d))
@@ -13,7 +7,6 @@ All notable changes to this project will be documented in this file. See [commit
 * hide with style ([11e9819](https://github.com/Mara-Li/obsidian-explorer-hidder/commit/11e9819164b6107778a04ae87bac415f40af6bbb))
 * refactor and start translation ([715f8aa](https://github.com/Mara-Li/obsidian-explorer-hidder/commit/715f8aa30d9f43bc80bb1841645ac0e13bbdd63d))
 * set settings and the style linked ([d156320](https://github.com/Mara-Li/obsidian-explorer-hidder/commit/d1563209e0e068da458fb1c000d243b3d151d708))
-
 
 ### Bug Fixes
 
