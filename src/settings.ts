@@ -114,11 +114,29 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 		this.disablePlusButton(temp);
 
 		this.settings.snippets.forEach((snippet) => {
+			const icon = {
+				bookmark: "bookmark",
+				nav: "file",
+			};
+			switch (snippet.type) {
+				case "folder":
+					icon.nav = snippet.hiddenInNav ? "folder" : "folder-x";
+					icon.bookmark = snippet.hiddenInBookmarks ? "book-marked" : "book-x";
+					break;
+				case "file":
+					icon.nav = snippet.hiddenInNav ? "file" : "file-x";
+					icon.bookmark = snippet.hiddenInBookmarks ? "bookmark" : "bookmark-x";
+					break;
+				case "string":
+					icon.nav = snippet.hiddenInNav ? "list" : "list-x";
+					icon.bookmark = snippet.hiddenInBookmarks ? "eye" : "eye-off";
+					break;
+			}
 			const rule = new Setting(containerEl)
 				.setClass("display-none")
 				.addExtraButton((button) => {
 					button
-						.setIcon(snippet.hiddenInNav ? "eye" : "eye-off")
+						.setIcon(icon.nav)
 						.setTooltip(snippet.hiddenInNav ? "Show in navigation" : "Hide in navigation")
 						.onClick(async () => {
 							snippet.hiddenInNav = !snippet.hiddenInNav;
@@ -152,7 +170,7 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 				})
 				.addExtraButton((button) => {
 					button
-						.setIcon(snippet.hiddenInBookmarks ? "bookmark" : "bookmark-x")
+						.setIcon(icon.bookmark)
 						.setTooltip(
 							snippet.hiddenInBookmarks ? "Show in bookmarks" : "Hide in bookmarks"
 						)
