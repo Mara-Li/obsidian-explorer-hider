@@ -117,8 +117,8 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 				.setClass("display-none")
 				.addExtraButton((button) => {
 					button
-						.setIcon(snippet.hiddenInNav ? "eye-off" : "eye")
-						.setTooltip(snippet.hiddenInNav ? "Hide in navigation" : "Show in navigation")
+						.setIcon(snippet.hiddenInNav ? "eye" : "eye-off")
+						.setTooltip(snippet.hiddenInNav ? "Show in navigation" : "Hide in navigation")
 						.onClick(async () => {
 							snippet.hiddenInNav = !snippet.hiddenInNav;
 							this.plugin.saveSettings();
@@ -137,7 +137,7 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 					button
 						.setIcon(snippet.hiddenInBookmarks ? "bookmark" : "bookmark-x")
 						.setTooltip(
-							snippet.hiddenInBookmarks ? "Hide in bookmarks" : "Show in bookmarks"
+							snippet.hiddenInBookmarks ? "Show in bookmarks" : "Hide in bookmarks"
 						)
 						.onClick(async () => {
 							snippet.hiddenInBookmarks = !snippet.hiddenInBookmarks;
