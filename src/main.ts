@@ -124,16 +124,26 @@ export default class ExplorerHidder extends Plugin {
 	}
 
 	addToMenu(which: "file" | "bookmark", file: TAbstractFile, menu: Menu) {
+		const isAlreadyInSet = this.isAlreadyRegistered(file.path);
+		const from = which === "file" ? "the explorer" : "bookmarks";
+		const hidden =
+			which === "file" ? isAlreadyInSet?.hiddenInNav : isAlreadyInSet?.hiddenInBookmarks;
+		const icon =
+			which === "file"
+				? {
+						off: "eye-off",
+						on: "eye",
+					}
+				: {
+						off: "bookmark-x",
+						on: "bookmark",
+					};
+		const name = file instanceof TFile ? file.basename : file.name;
 		menu.addItem((item) => {
-			const isAlreadyInSet = this.isAlreadyRegistered(file.path);
-			const hidden =
-				which === "file"
-					? isAlreadyInSet?.hiddenInNav
-					: isAlreadyInSet?.hiddenInBookmarks;
 			if (isAlreadyInSet && hidden) {
 				item
-					.setTitle(`Show ${file instanceof TFile ? file.basename : file.name}`)
-					.setIcon("eye")
+					.setTitle(`Show « ${name} » in ${from}`)
+					.setIcon(icon.on)
 					.onClick(async () => {
 						if (which === "file") isAlreadyInSet.hiddenInNav = false;
 						else if (which === "bookmark") isAlreadyInSet.hiddenInBookmarks = false;
@@ -145,10 +155,9 @@ export default class ExplorerHidder extends Plugin {
 					});
 				return;
 			}
-			const name = file instanceof TFile ? file.basename : file.name;
 			item
-				.setTitle(`Hide ${name}`)
-				.setIcon("eye-off")
+				.setTitle(`Hide « ${name} » in ${from}`)
+				.setIcon(icon.on)
 				.onClick(async () => {
 					const itemType = file instanceof TFile ? "file" : "folder";
 					if (isAlreadyInSet) this.snippets.delete(isAlreadyInSet);
@@ -183,8 +192,18 @@ export default class ExplorerHidder extends Plugin {
 
 		//add a button to add a new file or folder to hide
 		this.registerEvent(
-			this.app.workspace.on("file-menu", (menu, file) =>
-				this.addToMenu("file", file, menu)
+			this.app.workspace.on(
+				"file-menu",
+				(menu: Menu, file: TAbstractFile, source: string) => {
+					menu.addSeparator();
+					if (source === "more-options") {
+						this.addToMenu("file", file, menu);
+						this.addToMenu("bookmark", file, menu);
+						return;
+					}
+
+					this.addToMenu("file", file, menu);
+				}
 			)
 		);
 
