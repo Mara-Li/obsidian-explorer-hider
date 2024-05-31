@@ -9,10 +9,10 @@ export default class ExplorerHidder extends Plugin {
 	snippets: Set<Hidden> = new Set();
 	style: HTMLStyleElement | null = null;
 
-	reloadRibbonIcon(t: HTMLElement) {
+	reloadRibbonIcon(ribbonElem: HTMLElement) {
 		const icon = this.settings.showAll ? "eye-off" : "eye";
 		const iconDesc = this.settings.showAll ? "Hide all" : "Show all";
-		t.detach();
+		ribbonElem.detach();
 		//add a new ribbon icon
 		const ribbonEye = this.addRibbonIcon(icon, iconDesc, () => {
 			this.settings.showAll = !this.settings.showAll;
