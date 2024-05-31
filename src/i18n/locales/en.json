@@ -1,0 +1,32 @@
+{
+  "Add": "Add",
+  "Always hide in bookmarks": "Always hide bookmarks",
+  "Contains": "Contains",
+  "Delete": "Remove snippet",
+  "Endswith": "Ends with",
+  "Exact": "Exact",
+  "List": "List",
+  "Path": "Path",
+  "Startswith": "Starts with",
+  "Subcode": "Text followed by hyphen",
+  "Use a css snippet": "Use a css snippet",
+  "addNewSnippets": "Add a new snippet",
+  "file-menu": "By default, hiding a file from Explorer will also hide its bookmark (if it exists).",
+  "hide": {
+    "all": "Enable hiding snippets",
+    "bookmarks": "Hide in bookmarks",
+    "bookmarksWithName": "Hide « {{- name}} » in the bookmarks",
+    "explorer": "Hide in Explorer",
+    "explorerWithName": "Hide « {{- name}} » in the explorer",
+    "withName": "Hide {{- name}}"
+  },
+  "show": {
+    "all": "Disable hiding",
+    "bookmarks": "Show in bookmarks",
+    "bookmarksWithName": "Show « {{- name}} » in the bookmarks",
+    "explorer": "Show in the explorer",
+    "explorerWithName": "Show « {{- name}} » in the explorer",
+    "withName": "Show « {{- name}} » "
+  },
+  "snippetCSSInBg": "Let the plugin use a CSS snippet instead of load directly the CSS into Obsidian."
+}

@@ -2,6 +2,7 @@ import { type App, PluginSettingTab, Setting } from "obsidian";
 import type ExplorerHidder from "./main";
 import { AttributeSelector, type Hidden, type ExplorerHidderSettings } from "./interface";
 import type { RulesCompiler } from "./rules";
+import i18next from "i18next";
 
 export class ExplorerHidderSettingTab extends PluginSettingTab {
 	plugin: ExplorerHidder;
@@ -9,12 +10,12 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 	snippets: Set<Hidden>;
 	compiler: RulesCompiler;
 
-	constructor(app: App, plugin: ExplorerHidder, compiler: RulesCompiler) {
+	constructor(app: App, plugin: ExplorerHidder) {
 		super(app, plugin);
 		this.plugin = plugin;
 		this.settings = plugin.settings;
 		this.snippets = plugin.snippets;
-		this.compiler = compiler;
+		this.compiler = plugin.compiler as RulesCompiler;
 	}
 
 	isAlreadyInSet(snippet: Hidden): boolean {
@@ -44,10 +45,8 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 		containerEl.empty();
 		containerEl.addClasses(["explorer-hidder"]);
 		new Setting(containerEl)
-			.setName("Use a css snippet")
-			.setDesc(
-				"Let the plugin use a css snippet to hide files and folders, instead of in the background."
-			)
+			.setName(i18next.t("Use a css snippet"))
+			.setDesc(i18next.t("snippetCSSInBg"))
 			.addToggle((toggle) => {
 				toggle.setValue(this.plugin.settings.useSnippets).onChange(async (value) => {
 					this.plugin.settings.useSnippets = value;
@@ -56,10 +55,8 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 				});
 			});
 		new Setting(containerEl)
-			.setName("Always hide in bookmarks")
-			.setDesc(
-				"By default, the plugin will also hide in bookmarks when registered by the file-menu"
-			)
+			.setName(i18next.t("Always hide in bookmarks"))
+			.setDesc(i18next.t("file-menu"))
 			.addToggle((toggle) => {
 				toggle
 					.setValue(this.plugin.settings.alwaysHideInBookmarks)
@@ -68,7 +65,6 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					});
 			});
-		new Setting(containerEl).setHeading().setName("Snippets");
 		let temp: Hidden = {
 			path: "",
 			type: "string",
@@ -76,17 +72,18 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 			hiddenInNav: true,
 			hiddenInBookmarks: true,
 		};
+		new Setting(containerEl).setHeading().setName(i18next.t("addNewSnippets"));
 
 		new Setting(containerEl)
 			.setClass("display-none")
 			.addDropdown((dropdown) => {
 				dropdown
-					.addOption(AttributeSelector.Exact, "Exact")
-					.addOption(AttributeSelector.Contains, "Contains")
-					.addOption(AttributeSelector.EndsWith, "Ends with")
-					.addOption(AttributeSelector.List, "List")
-					.addOption(AttributeSelector.StartsWith, "Starts with")
-					.addOption(AttributeSelector.Subcode, "Subcode")
+					.addOption(AttributeSelector.Exact, i18next.t("Exact"))
+					.addOption(AttributeSelector.Contains, i18next.t("Contains"))
+					.addOption(AttributeSelector.EndsWith, i18next.t("Endswith"))
+					.addOption(AttributeSelector.List, i18next.t("List"))
+					.addOption(AttributeSelector.StartsWith, i18next.t("Startswith"))
+					.addOption(AttributeSelector.Subcode, i18next.t("Subcode"))
 					.setValue(temp.selector || AttributeSelector.Exact)
 					.onChange((value) => {
 						temp.selector = value as AttributeSelector;
@@ -94,7 +91,7 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 			})
 			.addText((text) => {
 				text
-					.setPlaceholder("Path")
+					.setPlaceholder(i18next.t("Path"))
 					.setValue(temp.path)
 					.onChange((value) => {
 						temp.path = value;
@@ -127,6 +124,7 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 					.extraSettingsEl.addClass("add-snippet");
 			});
 		this.disablePlusButton(temp);
+		new Setting(containerEl).setHeading().setName("Snippets");
 
 		this.settings.snippets.forEach((snippet) => {
 			const icon = {
@@ -152,7 +150,11 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 				.addExtraButton((button) => {
 					button
 						.setIcon(icon.nav)
-						.setTooltip(snippet.hiddenInNav ? "Show in navigation" : "Hide in navigation")
+						.setTooltip(
+							snippet.hiddenInNav
+								? i18next.t("show.explorer")
+								: i18next.t("hide.explorer")
+						)
 						.onClick(async () => {
 							snippet.hiddenInNav = !snippet.hiddenInNav;
 							this.plugin.saveSettings();
@@ -163,12 +165,12 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 			if (snippet.type === "string") {
 				rule.addDropdown((dropdown) => {
 					dropdown
-						.addOption(AttributeSelector.Exact, "Exact")
-						.addOption(AttributeSelector.Contains, "Contains")
-						.addOption(AttributeSelector.EndsWith, "Ends with")
-						.addOption(AttributeSelector.List, "List")
-						.addOption(AttributeSelector.StartsWith, "Starts with")
-						.addOption(AttributeSelector.Subcode, "Subcode")
+						.addOption(AttributeSelector.Exact, i18next.t("Exact"))
+						.addOption(AttributeSelector.Contains, i18next.t("Contains"))
+						.addOption(AttributeSelector.EndsWith, i18next.t("Endswith"))
+						.addOption(AttributeSelector.List, i18next.t("List"))
+						.addOption(AttributeSelector.StartsWith, i18next.t("Startswith"))
+						.addOption(AttributeSelector.Subcode, i18next.t("Subcode"))
 						.setValue(snippet.selector || AttributeSelector.Exact)
 						.onChange((value) => {
 							snippet.selector = value as AttributeSelector;
@@ -187,7 +189,9 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 					button
 						.setIcon(icon.bookmark)
 						.setTooltip(
-							snippet.hiddenInBookmarks ? "Show in bookmarks" : "Hide in bookmarks"
+							snippet.hiddenInBookmarks
+								? i18next.t("show.bookmarks")
+								: i18next.t("hide.bookmarks")
 						)
 						.onClick(async () => {
 							snippet.hiddenInBookmarks = !snippet.hiddenInBookmarks;
@@ -198,12 +202,15 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 				})
 
 				.addExtraButton((button) => {
-					button.setIcon("trash").onClick(async () => {
-						this.snippets.delete(snippet);
-						this.plugin.saveSettings();
-						this.compiler.reloadStyle();
-						this.display();
-					});
+					button
+						.setIcon("trash")
+						.setTooltip(i18next.t("Delete"))
+						.onClick(async () => {
+							this.snippets.delete(snippet);
+							this.plugin.saveSettings();
+							this.compiler.reloadStyle();
+							this.display();
+						});
 				});
 		});
 	}

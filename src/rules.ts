@@ -15,18 +15,6 @@ export class RulesCompiler {
 		this.app = plugin.app;
 		this.style = plugin.style;
 	}
-	reloadRibbonIcon(ribbonElem: HTMLElement) {
-		const icon = this.settings.showAll ? "eye-off" : "eye";
-		const iconDesc = this.settings.showAll ? "Hide all" : "Show all";
-		ribbonElem.detach();
-		//add a new ribbon icon
-		const ribbonEye = this.plugin.addRibbonIcon(icon, iconDesc, () => {
-			this.settings.showAll = !this.settings.showAll;
-			this.plugin.saveSettings();
-			this.reloadStyle();
-			this.reloadRibbonIcon(ribbonEye);
-		});
-	}
 
 	createNavRule(snippet: Hidden, isLast: boolean) {
 		const { path, type, hiddenInNav: hidden, selector } = snippet;
