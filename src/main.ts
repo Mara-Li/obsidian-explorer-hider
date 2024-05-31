@@ -50,7 +50,6 @@ export default class ExplorerHidder extends Plugin {
 		});
 		await this.loadSettings();
 		this.compiler = new RulesCompiler(this) as RulesCompiler;
-		await this.compiler.enableStyle(this.settings.useSnippets);
 		const { icon, desc } = this.reloadIcon();
 		// This creates an icon in the left ribbon.
 		const ribbonEye = this.addRibbonIcon(icon.name, desc, () => {
@@ -84,6 +83,18 @@ export default class ExplorerHidder extends Plugin {
 					contextMenu.explorerMenu(menu, file);
 				}
 			)
+		);
+
+		this.registerEvent(
+			this.app.workspace.on("files-menu", (menu: Menu, files: TAbstractFile[]) => {
+				contextMenu.hideMultipleInExplorer(menu, files);
+			})
+		);
+
+		this.registerEvent(
+			this.app.workspace.on("layout-ready", async () => {
+				await this.compiler?.enableStyle(this.settings.useSnippets);
+			})
 		);
 
 		//follow file renamed/moved to update the settings accordingly

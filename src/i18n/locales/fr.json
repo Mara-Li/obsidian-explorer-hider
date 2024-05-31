@@ -18,6 +18,7 @@
     "bookmarksWithName": "Cacher « {{- name}} » dans les signets",
     "explorer": "Cacher dans l'explorateur",
     "explorerWithName": "Cacher « {{- name}} » dans l'explorateur",
+    "multipleItems": "Cacher {{- count}} notes",
     "withName": "Cacher {{- name}}"
   },
   "show": {
@@ -26,6 +27,7 @@
     "bookmarksWithName": "Afficher « {{- name}} » dans les signets",
     "explorer": "Afficher dans l'explorateur",
     "explorerWithName": "Afficher « {{- name}} » dans l'explorateur",
+    "multipleItems": "Afficher {{- count}} notes",
     "withName": "Afficher « {{- name}} » "
   },
   "snippetCSSInBg": "Laisser le plugin utiliser un extrait CSS au lieu de charger directement le CSS dans Obsidian."

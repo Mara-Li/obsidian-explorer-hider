@@ -129,6 +129,56 @@ export class ExplorerMenu {
 			});
 	}
 
+	hideMultipleInExplorer(menu: Menu, files: TAbstractFile[]) {
+		const isAlreadyInSet = files.map((file) =>
+			this.plugin.isAlreadyRegistered(file.path)
+		);
+		const hidden = isAlreadyInSet.map((item) => item?.hiddenInNav);
+		const icon = {
+			off: "eye-off",
+			on: "eye",
+		};
+
+		const allHidden = hidden.every((item) => item);
+		menu.addItem((item) => {
+			if (allHidden) {
+				item
+					.setTitle(i18next.t("show.multipleItems", { count: files.length }))
+					.setIcon(icon.on)
+					.onClick(async () => {
+						files.forEach((file) => {
+							const isAlreadyInSet = this.plugin.isAlreadyRegistered(file.path);
+							isAlreadyInSet!.hiddenInNav = false;
+							this.updateSnippet(isAlreadyInSet as Hidden);
+						});
+						await this.plugin.saveSettings();
+						this.compiler.reloadStyle();
+					});
+			} else {
+				item
+					.setTitle(i18next.t("hide.multipleItems", { count: files.length }))
+					.setIcon(icon.off)
+					.onClick(async () => {
+						files.forEach((file) => {
+							const isAlreadyInSet = this.plugin.isAlreadyRegistered(file.path);
+							const itemType = file instanceof TFile ? "file" : "folder";
+							if (isAlreadyInSet) this.snippets.delete(isAlreadyInSet);
+							this.snippets.add({
+								path: file.path,
+								type: itemType,
+								hiddenInNav: true,
+								hiddenInBookmarks: isAlreadyInSet
+									? isAlreadyInSet.hiddenInBookmarks
+									: this.settings.alwaysHideInBookmarks,
+							});
+						});
+						await this.plugin.saveSettings();
+						this.compiler.reloadStyle();
+					});
+			}
+		});
+	}
+
 	explorerMenu(menu: Menu, file: TAbstractFile) {
 		const isAlreadyInSet = this.plugin.isAlreadyRegistered(file.path);
 		const hidden = isAlreadyInSet?.hiddenInNav;

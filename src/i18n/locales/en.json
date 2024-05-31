@@ -18,6 +18,7 @@
     "bookmarksWithName": "Hide « {{- name}} » in the bookmarks",
     "explorer": "Hide in Explorer",
     "explorerWithName": "Hide « {{- name}} » in the explorer",
+    "multipleItems": "Hide {{-count}} notes",
     "withName": "Hide {{- name}}"
   },
   "show": {
@@ -26,6 +27,7 @@
     "bookmarksWithName": "Show « {{- name}} » in the bookmarks",
     "explorer": "Show in the explorer",
     "explorerWithName": "Show « {{- name}} » in the explorer",
+    "multipleItems": "Show {{- count}} notes",
     "withName": "Show « {{- name}} » "
   },
   "snippetCSSInBg": "Let the plugin use a CSS snippet instead of load directly the CSS into Obsidian."
