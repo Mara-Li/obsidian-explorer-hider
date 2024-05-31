@@ -22,7 +22,7 @@ export default class ExplorerHidder extends Plugin {
 		});
 	}
 
-	createRule(snippet: Hidden, isLast: boolean) {
+	createNavRule(snippet: Hidden, isLast: boolean) {
 		const { path, type, hidden, selector } = snippet;
 		if (!hidden || this.settings.showAll) return;
 		const comma = isLast ? "" : ",";
@@ -42,7 +42,7 @@ export default class ExplorerHidder extends Plugin {
 		return `${ruleType}[data-path${selectorChar}="${removeExtension}"]${comma} `;
 	}
 
-	async createSnippets() {
+	async createSnippetFile() {
 		//use a file in `.obsidian/snippets` to hide files and folders instead of the background
 		const obsidianDir = this.app.vault.configDir;
 		const snippetsGeneratedFiles = normalize(
@@ -60,7 +60,7 @@ export default class ExplorerHidder extends Plugin {
 		filteredSnippets.forEach((snippet) => {
 			const size = filteredSnippets.length - 1;
 			const index = filteredSnippets.indexOf(snippet);
-			const useRule = this.createRule(snippet, index === size);
+			const useRule = this.createNavRule(snippet, index === size);
 			const bookmarksRuleUse = this.createRuleForBookMarks(snippet, index === size);
 			if (bookmarksRuleUse) bookmarksRule += bookmarksRuleUse;
 			if (useRule) rule += useRule;
@@ -82,7 +82,7 @@ export default class ExplorerHidder extends Plugin {
 	async enableStyle(toFile: boolean = false) {
 		if (toFile) {
 			//create the snippets file if not exist
-			await this.createSnippets();
+			await this.createSnippetFile();
 			this.app.customCss.setCssEnabledStatus(`generated.explorer-hidder`, true);
 			//we need to wait a little to wait for obsidian to load the file & enable it before disabling the style
 			// biome-ignore lint/correctness/noUndeclaredVariables: Obsidian global function
@@ -98,7 +98,7 @@ export default class ExplorerHidder extends Plugin {
 
 	reloadStyle() {
 		this.style?.detach();
-		if (this.settings.useSnippets) this.createSnippets();
+		if (this.settings.useSnippets) this.createSnippetFile();
 		else this.createDocumentStyle();
 
 		this.app.workspace.trigger("css-change");
@@ -156,6 +156,32 @@ export default class ExplorerHidder extends Plugin {
 							this.reloadStyle();
 						});
 				});
+			})
+		);
+
+		//follow file renamed/moved to update the settings accordingly
+		this.registerEvent(
+			this.app.vault.on("rename", async (file, oldPath) => {
+				const isAlreadyInSet = this.isAlreadyRegistered(oldPath);
+				if (!isAlreadyInSet) return;
+
+				this.snippets.delete(isAlreadyInSet);
+				this.snippets.add({
+					path: file.path,
+					type: file instanceof TFile ? "file" : "folder",
+					hidden: true,
+				});
+				await this.saveSettings();
+				this.reloadStyle();
+			})
+		);
+		this.registerEvent(
+			this.app.vault.on("delete", async (file) => {
+				const isAlreadyInSet = this.isAlreadyRegistered(file.path);
+				if (!isAlreadyInSet) return;
+				this.snippets.delete(isAlreadyInSet);
+				await this.saveSettings();
+				this.reloadStyle();
 			})
 		);
 	}
