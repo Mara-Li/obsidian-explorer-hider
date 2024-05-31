@@ -38,3 +38,26 @@ jobs:
                   else
                       echo "STYLE='false'" >> "$GITHUB_OUTPUT"
                   fi
+    release:
+        if: (github.event_name == 'push') || (github.event_name == 'workflow_dispatch' && !inputs.bump)
+        uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-release.yaml@main
+        needs: echo
+
+        with:
+            PLUGIN_NAME: explorer-hidder
+            STYLE: ${{ fromJson(needs.echo.outputs.STYLE) || false}}
+            CACHE: "pnpm"
+        secrets:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    bump-version-and-release:
+        if: ${{ inputs.bump }}
+        needs: echo
+        uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-bump-version.yaml@main
+        with:
+            PLUGIN_NAME: explorer-hidder
+            STYLE: ${{ fromJson(needs.echo.outputs.STYLE) || false}}
+            BETA: ${{ inputs.beta }}
+            CACHE: "pnpm"
+        secrets:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
