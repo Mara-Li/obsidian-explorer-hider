@@ -37,11 +37,9 @@ jobs:
               run: |
                   echo "STYLE=false" >> "$GITHUB_OUTPUT"
                   if [[ -f "styles.css" || -f "src/styles.css" ]]; then
-                  echo "style exists"
-                  echo "STYLE=true" >> "$GITHUB_OUTPUT"
+                    echo "STYLE=true" >> "$GITHUB_OUTPUT"
                   else
-                  echo "style does not exist"
-                  echo "STYLE=false" >> "$GITHUB_OUTPUT"
+                    echo "STYLE=false" >> "$GITHUB_OUTPUT"
                   fi
 
     release:
