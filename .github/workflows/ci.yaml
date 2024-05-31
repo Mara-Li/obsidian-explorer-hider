@@ -25,6 +25,8 @@ jobs:
         outputs:
             STYLE: ${{ fromJson(steps.style.outputs.STYLE) }}
         steps:
+            - name: Checkout
+              uses: actions/checkout@v4
             - name: echo
               run: |
                   echo EVENT NAME =  ${{ github.event_name }}
