@@ -33,10 +33,10 @@ jobs:
             - name: Style exists
               id: style
               run: |
-                  if [ -f "styles.css" ] || [ -f "src/styles.css" ]; then
-                      echo "STYLE='true'" >> "$GITHUB_OUTPUT"
+                  if [[ -f "styles.css" || -f "src/styles.css" ]]; then
+                    echo "STYLE='true'" >> "$GITHUB_OUTPUT"
                   else
-                      echo "STYLE='false'" >> "$GITHUB_OUTPUT"
+                    echo "STYLE='false'" >> "$GITHUB_OUTPUT"
                   fi
     release:
         if: (github.event_name == 'push') || (github.event_name == 'workflow_dispatch' && !inputs.bump)
