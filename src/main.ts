@@ -118,7 +118,7 @@ export default class ExplorerHidder extends Plugin {
 
 	isAlreadyRegistered(path: string): Hidden | undefined {
 		for (const s of this.snippets) {
-			if (s.path === path) return s;
+			if (s.path === path && s.type !== "string") return s;
 		}
 		return undefined;
 	}

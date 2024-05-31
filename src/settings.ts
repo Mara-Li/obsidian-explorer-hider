@@ -61,6 +61,7 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 			hiddenInNav: true,
 			hiddenInBookmarks: true,
 		};
+
 		new Setting(containerEl)
 			.setClass("display-none")
 			.addDropdown((dropdown) => {
@@ -89,7 +90,6 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 			.addExtraButton((button) => {
 				button
 					.setIcon("plus")
-					.setDisabled(temp.path === "" || this.isAlreadyInSet(temp))
 					.onClick(async () => {
 						if (this.isAlreadyInSet(temp) || temp.path === "") return;
 						this.snippets.add({
@@ -111,9 +111,10 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 					})
 					.extraSettingsEl.addClass("add-snippet");
 			});
+		this.disablePlusButton(temp);
 
 		this.settings.snippets.forEach((snippet) => {
-			new Setting(containerEl)
+			const rule = new Setting(containerEl)
 				.setClass("display-none")
 				.addExtraButton((button) => {
 					button
@@ -125,7 +126,23 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 							this.plugin.reloadStyle();
 							this.display();
 						});
-				})
+				});
+			if (snippet.type === "string") {
+				rule.addDropdown((dropdown) => {
+					dropdown
+						.addOption(AttributeSelector.Exact, "Exact")
+						.addOption(AttributeSelector.Contains, "Contains")
+						.addOption(AttributeSelector.EndsWith, "Ends with")
+						.addOption(AttributeSelector.List, "List")
+						.addOption(AttributeSelector.StartsWith, "Starts with")
+						.addOption(AttributeSelector.Subcode, "Subcode")
+						.setValue(snippet.selector || AttributeSelector.Exact)
+						.onChange((value) => {
+							snippet.selector = value as AttributeSelector;
+						});
+				});
+			}
+			rule
 				.addText((text) => {
 					text.setValue(snippet.path).onChange((value) => {
 						snippet.path = value;
@@ -151,6 +168,7 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 					button.setIcon("trash").onClick(async () => {
 						this.snippets.delete(snippet);
 						this.plugin.saveSettings();
+						this.plugin.reloadStyle();
 						this.display();
 					});
 				});
