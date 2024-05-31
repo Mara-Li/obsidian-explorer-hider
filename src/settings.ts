@@ -46,9 +46,10 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 				"Let the plugin use a css snippet to hide files and folders, instead of in the background."
 			)
 			.addToggle((toggle) => {
-				toggle.setValue(this.plugin.settings.useSnippets).onChange((value) => {
+				toggle.setValue(this.plugin.settings.useSnippets).onChange(async (value) => {
 					this.plugin.settings.useSnippets = value;
-					this.plugin.saveSettings();
+					await this.plugin.saveSettings();
+					await this.plugin.enableStyle(value);
 				});
 			});
 
