@@ -33,7 +33,7 @@ jobs:
             - name: Style exists
               id: style
               run: |
-                  if [ -f "styles.css" ] || [ -f "src/styles.css"]; then
+                  if [ -f "styles.css" ] || [ -f "src/styles.css" ]; then
                       echo "STYLE=true" >> "$GITHUB_OUTPUT"
                   else
                       echo "STYLE=false" >> "$GITHUB_OUTPUT"
@@ -42,15 +42,14 @@ jobs:
         if: (github.event_name == 'push') || (github.event_name == 'workflow_dispatch' && !inputs.bump)
         uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-release.yaml@main
         needs: echo
-        
-        with:
-          PLUGIN_NAME: explorer-hidder 
-          STYLE: ${{ needs.echo.outputs.STYLE }}
-          CACHE: "pnpm"
-        secrets:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-          
+        with:
+            PLUGIN_NAME: explorer-hidder
+            STYLE: ${{ needs.echo.outputs.STYLE }}
+            CACHE: "pnpm"
+        secrets:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     bump-version-and-release:
         if: ${{ inputs.bump }}
         needs: echo
