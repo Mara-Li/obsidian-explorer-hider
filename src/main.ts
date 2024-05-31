@@ -1,7 +1,19 @@
-import { type Menu, Plugin, type TAbstractFile, TFile } from "obsidian";
+import {
+	type Menu,
+	Plugin,
+	sanitizeHTMLToDom,
+	type TAbstractFile,
+	TFile,
+} from "obsidian";
 
 import { ExplorerHidderSettingTab } from "./settings";
-import { type ExplorerHidderSettings, DEFAULT_SETTINGS, type Hidden } from "./interface";
+import {
+	type ExplorerHidderSettings,
+	DEFAULT_SETTINGS,
+	type Hidden,
+	RIBBON_ICON_OFF,
+	RIBBON_ICON_ON,
+} from "./interface";
 import { ExplorerMenu } from "./explorer_menu";
 import { RulesCompiler } from "./rules";
 import i18next from "i18next";
@@ -11,12 +23,20 @@ export default class ExplorerHidder extends Plugin {
 	settings!: ExplorerHidderSettings;
 	snippets: Set<Hidden> = new Set();
 	style: HTMLStyleElement | null = null;
+	compiler: RulesCompiler | null = null;
 
 	isAlreadyRegistered(path: string): Hidden | undefined {
 		for (const s of this.snippets) {
 			if (s.path === path && s.type !== "string") return s;
 		}
 		return undefined;
+	}
+
+	reloadIcon() {
+		return {
+			icon: this.settings.showAll ? RIBBON_ICON_OFF : RIBBON_ICON_ON,
+			desc: this.settings.showAll ? i18next.t("hide.all") : i18next.t("show.all"),
+		};
 	}
 
 	async onload() {
@@ -29,21 +49,26 @@ export default class ExplorerHidder extends Plugin {
 			returnEmptyString: false,
 		});
 		await this.loadSettings();
-		const ruleCompiler = new RulesCompiler(this);
-		await ruleCompiler.enableStyle(this.settings.useSnippets);
-		const icon = this.settings.showAll ? "eye-off" : "eye";
-		const iconDesc = this.settings.showAll ? "Hide all" : "Show all";
+		this.compiler = new RulesCompiler(this) as RulesCompiler;
+		await this.compiler.enableStyle(this.settings.useSnippets);
+		const { icon, desc } = this.reloadIcon();
 		// This creates an icon in the left ribbon.
-		const ribbonEye = this.addRibbonIcon(icon, iconDesc, () => {
+		const ribbonEye = this.addRibbonIcon(icon.name, desc, () => {
 			this.settings.showAll = !this.settings.showAll;
 			this.saveSettings();
-			ruleCompiler.reloadStyle();
-			//update the icon
-			ruleCompiler.reloadRibbonIcon(ribbonEye);
+			this.compiler?.reloadStyle();
+			//update the icon and the desc using the HTML element
+			const { icon, desc } = this.reloadIcon();
+			ribbonEye.ariaLabel = desc;
+			const oldIcon = ribbonEye.querySelector("svg");
+			if (oldIcon) {
+				oldIcon.remove();
+				ribbonEye.appendChild(sanitizeHTMLToDom(icon.svg));
+			}
 		});
-		const contextMenu = new ExplorerMenu(this, ruleCompiler);
+		const contextMenu = new ExplorerMenu(this);
 
-		this.addSettingTab(new ExplorerHidderSettingTab(this.app, this, ruleCompiler));
+		this.addSettingTab(new ExplorerHidderSettingTab(this.app, this));
 
 		//add a button to add a new file or folder to hide
 		this.registerEvent(
@@ -75,7 +100,7 @@ export default class ExplorerHidder extends Plugin {
 					hiddenInBookmarks: true,
 				});
 				await this.saveSettings();
-				ruleCompiler.reloadStyle();
+				this.compiler?.reloadStyle();
 			})
 		);
 		this.registerEvent(
@@ -84,7 +109,7 @@ export default class ExplorerHidder extends Plugin {
 				if (!isAlreadyInSet) return;
 				this.snippets.delete(isAlreadyInSet);
 				await this.saveSettings();
-				ruleCompiler.reloadStyle();
+				this.compiler?.reloadStyle();
 			})
 		);
 	}
