@@ -1,9 +1,31 @@
+export type Items = "file" | "folder" | "string";
 
+export enum AttributeSelector {
+	List = "~",
+	Subcode = "-",
+	StartsWith = "^",
+	EndsWith = "$",
+	Contains = "*",
+	Exact = "",
+}
+
+export interface Hidden {
+	path: string;
+	type: Items;
+	selector?: AttributeSelector;
+	hidden: boolean;
+}
 
 export interface ExplorerHidderSettings {
-	mySetting: string;
+	useSnippets: boolean;
+	snippets: Hidden[];
+	hideInBookmarks: boolean;
+	hideAll: boolean;
 }
 
 export const DEFAULT_SETTINGS: ExplorerHidderSettings = {
-	mySetting: "default"
+	useSnippets: false,
+	hideAll: false,
+	snippets: [],
+	hideInBookmarks: true,
 };
