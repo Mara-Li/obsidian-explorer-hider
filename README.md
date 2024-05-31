@@ -41,6 +41,16 @@ The setting also display the list of all rules where you can:
 - Delete the rules
 - For "string" rules, you can edit the attributes. It's not possible for rules added using the file-menu, as they are followed by the path for changes (deleted/renamed/moved).
 
+### Hiding files/folders
+
+To hide a file or a folder, you can right-click on the file/folder in the explorer or in the bookmarks and select `Hide file/folder`. The file/folder will be hidden from the explorer and the bookmarks.
+
+### Display all or hide all
+
+Using the "eye" ribbon button you can enable or disable all the rules. 
+- Show all will display all the hidden files/folders (ignoring the rules)
+- Hide all will restore the older state (based on the hidden parameters).
+
 ## 📥 Installation
 
 - [ ] From Obsidian's community plugins
