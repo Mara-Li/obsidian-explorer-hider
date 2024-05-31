@@ -33,11 +33,15 @@ jobs:
             - name: Style exists
               id: style
               run: |
+                  echo "STYLE=false" >> "$GITHUB_OUTPUT"
                   if [[ -f "styles.css" || -f "src/styles.css" ]]; then
-                    echo "STYLE=true" >> "$GITHUB_OUTPUT"
+                  echo "style exists"
+                  echo "STYLE=true" >> "$GITHUB_OUTPUT"
                   else
-                    echo "STYLE=false" >> "$GITHUB_OUTPUT"
+                  echo "style does not exist"
+                  echo "STYLE=false" >> "$GITHUB_OUTPUT"
                   fi
+
     release:
         if: (github.event_name == 'push') || (github.event_name == 'workflow_dispatch' && !inputs.bump)
         uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-release.yaml@main
@@ -45,7 +49,7 @@ jobs:
 
         with:
             PLUGIN_NAME: explorer-hidder
-            STYLE: ${{ fromJson(needs.echo.outputs.STYLE) || false}}
+            STYLE: ${{ fromJson(needs.echo.outputs.STYLE)}}
             CACHE: "pnpm"
         secrets:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
