@@ -20,12 +20,12 @@ export interface ExplorerHidderSettings {
 	useSnippets: boolean;
 	snippets: Hidden[];
 	hideInBookmarks: boolean;
-	hideAll: boolean;
+	showAll: boolean;
 }
 
 export const DEFAULT_SETTINGS: ExplorerHidderSettings = {
 	useSnippets: false,
-	hideAll: false,
+	showAll: false,
 	snippets: [],
 	hideInBookmarks: true,
 };

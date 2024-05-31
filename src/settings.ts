@@ -59,6 +59,7 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 				toggle.setValue(this.plugin.settings.hideInBookmarks).onChange((value) => {
 					this.plugin.settings.hideInBookmarks = value;
 					this.plugin.saveSettings();
+					this.plugin.reloadStyle();
 				});
 			});
 
@@ -133,9 +134,10 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 					toggle
 						.setValue(snippet.hidden)
 						.setTooltip("Display the file/folder in the explorer.")
-						.onChange((value) => {
-							snippet.hidden = !value;
-							this.plugin.saveSettings();
+						.onChange(async (value) => {
+							snippet.hidden = value;
+							await this.plugin.saveSettings();
+							this.plugin.reloadStyle();
 						});
 				})
 				.addExtraButton((button) => {
