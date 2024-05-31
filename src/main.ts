@@ -1,4 +1,4 @@
-import { Plugin, TFile } from "obsidian";
+import { type Menu, Plugin, type TAbstractFile, TFile } from "obsidian";
 
 import { ExplorerHidderSettingTab } from "./settings";
 import { type ExplorerHidderSettings, DEFAULT_SETTINGS, type Hidden } from "./interface";
@@ -123,10 +123,50 @@ export default class ExplorerHidder extends Plugin {
 		return undefined;
 	}
 
+	addToMenu(which: "file" | "bookmark", file: TAbstractFile, menu: Menu) {
+		menu.addItem((item) => {
+			const isAlreadyInSet = this.isAlreadyRegistered(file.path);
+			const hidden =
+				which === "file"
+					? isAlreadyInSet?.hiddenInNav
+					: isAlreadyInSet?.hiddenInBookmarks;
+			if (isAlreadyInSet && hidden) {
+				item
+					.setTitle(`Show ${file instanceof TFile ? file.basename : file.name}`)
+					.setIcon("eye")
+					.onClick(async () => {
+						if (which === "file") isAlreadyInSet.hiddenInNav = false;
+						else if (which === "bookmark") isAlreadyInSet.hiddenInBookmarks = false;
+						//overriding in the settings
+						this.snippets.delete(isAlreadyInSet);
+						this.snippets.add(isAlreadyInSet);
+						await this.saveSettings();
+						this.reloadStyle();
+					});
+				return;
+			}
+			const name = file instanceof TFile ? file.basename : file.name;
+			item
+				.setTitle(`Hide ${name}`)
+				.setIcon("eye-off")
+				.onClick(async () => {
+					const itemType = file instanceof TFile ? "file" : "folder";
+					if (isAlreadyInSet) this.snippets.delete(isAlreadyInSet);
+					this.snippets.add({
+						path: file.path,
+						type: itemType,
+						hiddenInNav: which === "file",
+						hiddenInBookmarks: which === "bookmark",
+					});
+					await this.saveSettings();
+					this.reloadStyle();
+				});
+		});
+	}
+
 	async onload() {
 		console.log(`[${this.manifest.name}] loaded`);
 		await this.loadSettings();
-		this.snippets = new Set(this.settings.snippets);
 		await this.enableStyle(this.settings.useSnippets);
 		const icon = this.settings.showAll ? "eye-off" : "eye";
 		const iconDesc = this.settings.showAll ? "Hide all" : "Show all";
@@ -143,37 +183,9 @@ export default class ExplorerHidder extends Plugin {
 
 		//add a button to add a new file or folder to hide
 		this.registerEvent(
-			this.app.workspace.on("file-menu", (menu, file) => {
-				menu.addItem((item) => {
-					const isAlreadyInSet = this.isAlreadyRegistered(file.path);
-					if (isAlreadyInSet) {
-						item
-							.setTitle(`Show ${file instanceof TFile ? file.basename : file.name}`)
-							.setIcon("eye")
-							.onClick(async () => {
-								this.snippets.delete(isAlreadyInSet);
-								await this.saveSettings();
-								this.reloadStyle();
-							});
-						return;
-					}
-					const name = file instanceof TFile ? file.basename : file.name;
-					item
-						.setTitle(`Hide ${name}`)
-						.setIcon("eye-off")
-						.onClick(async () => {
-							const itemType = file instanceof TFile ? "file" : "folder";
-							this.snippets.add({
-								path: file.path,
-								type: itemType,
-								hiddenInNav: true,
-								hiddenInBookmarks: false,
-							});
-							await this.saveSettings();
-							this.reloadStyle();
-						});
-				});
-			})
+			this.app.workspace.on("file-menu", (menu, file) =>
+				this.addToMenu("file", file, menu)
+			)
 		);
 
 		//follow file renamed/moved to update the settings accordingly
@@ -202,8 +214,6 @@ export default class ExplorerHidder extends Plugin {
 				this.reloadStyle();
 			})
 		);
-
-		//add to bookmarks
 	}
 
 	onunload() {
@@ -213,10 +223,21 @@ export default class ExplorerHidder extends Plugin {
 
 	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		this.snippets = new Set();
+
+		//sometimes, set doesn't remove the duplicates, so we remove them manually based on the path
+		const uniqueSnippets: Set<string> = new Set();
+		for (const s of this.settings.snippets) {
+			if (!uniqueSnippets.has(s.path)) {
+				uniqueSnippets.add(s.path);
+				this.snippets.add(s);
+			}
+		}
 	}
 
 	async saveSettings() {
-		//convert the set into an array
+		//prevent duplicate entries
+
 		this.settings.snippets = Array.from(this.snippets);
 		await this.saveData(this.settings);
 	}
