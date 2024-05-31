@@ -1,3 +1,14 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+
+## [1.1.0](https://github.com/Mara-Li/obsidian-explorer-hidder/compare/1.0.0...1.1.0) (2024-05-31)
+
+
+### Features
+
+* add files-menu too! ([71f4caa](https://github.com/Mara-Li/obsidian-explorer-hidder/commit/71f4caa150b1b20c5e9aa4c7f95acbb3e242be9a))
+
 ## 1.0.0 (2024-05-31)
 ### Features
 
