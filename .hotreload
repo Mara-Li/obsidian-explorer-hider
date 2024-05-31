@@ -1,0 +1,3 @@
+.explorer-hidder .setting-item .display-none > .setting-item-info {
+	display: none;
+}
