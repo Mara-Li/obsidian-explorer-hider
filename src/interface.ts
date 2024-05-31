@@ -13,13 +13,13 @@ export interface Hidden {
 	path: string;
 	type: Items;
 	selector?: AttributeSelector;
-	hidden: boolean;
+	hiddenInNav: boolean;
+	hiddenInBookmarks: boolean;
 }
 
 export interface ExplorerHidderSettings {
 	useSnippets: boolean;
 	snippets: Hidden[];
-	hideInBookmarks: boolean;
 	showAll: boolean;
 }
 
@@ -27,5 +27,4 @@ export const DEFAULT_SETTINGS: ExplorerHidderSettings = {
 	useSnippets: false,
 	showAll: false,
 	snippets: [],
-	hideInBookmarks: true,
 };

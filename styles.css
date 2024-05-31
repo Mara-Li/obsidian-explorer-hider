@@ -17,3 +17,7 @@
 		color: var(--icon-color);
 	}
 }
+
+.explorer-hidder input {
+	font-family: var(--font-monospace);
+}

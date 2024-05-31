@@ -53,25 +53,15 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 				});
 			});
 
-		new Setting(containerEl)
-			.setName("Hide in bookmarks")
-			.setDesc("Hide files and folders in the bookmarks section.")
-			.addToggle((toggle) => {
-				toggle.setValue(this.plugin.settings.hideInBookmarks).onChange((value) => {
-					this.plugin.settings.hideInBookmarks = value;
-					this.plugin.saveSettings();
-					this.plugin.reloadStyle();
-				});
-			});
-
 		new Setting(containerEl).setHeading().setName("Snippets");
 		let temp: Hidden = {
 			path: "",
 			type: "string",
 			selector: AttributeSelector.Exact,
-			hidden: true,
+			hiddenInNav: true,
+			hiddenInBookmarks: true,
 		};
-		const addSnippets = new Setting(containerEl)
+		new Setting(containerEl)
 			.setClass("display-none")
 			.addDropdown((dropdown) => {
 				dropdown
@@ -95,35 +85,47 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 						this.disablePlusButton(temp);
 					});
 				text.inputEl.addClass("width-100");
+			})
+			.addExtraButton((button) => {
+				button
+					.setIcon("plus")
+					.setDisabled(temp.path === "" || this.isAlreadyInSet(temp))
+					.onClick(async () => {
+						if (this.isAlreadyInSet(temp) || temp.path === "") return;
+						this.snippets.add({
+							path: temp.path,
+							type: temp.type,
+							selector: temp.selector,
+							hiddenInNav: true,
+							hiddenInBookmarks: true,
+						});
+						await this.plugin.saveSettings();
+						temp = {
+							path: "",
+							type: "string",
+							selector: AttributeSelector.Exact,
+							hiddenInNav: true,
+							hiddenInBookmarks: true,
+						};
+						this.display();
+					})
+					.extraSettingsEl.addClass("add-snippet");
 			});
-
-		addSnippets.addExtraButton((button) => {
-			button
-				.setIcon("plus")
-				.setDisabled(temp.path === "" || this.isAlreadyInSet(temp))
-				.onClick(async () => {
-					if (this.isAlreadyInSet(temp) || temp.path === "") return;
-					this.snippets.add({
-						path: temp.path,
-						type: temp.type,
-						selector: temp.selector,
-						hidden: true,
-					});
-					await this.plugin.saveSettings();
-					temp = {
-						path: "",
-						type: "string",
-						selector: AttributeSelector.Exact,
-						hidden: true,
-					};
-					this.display();
-				})
-				.extraSettingsEl.addClass("add-snippet");
-		});
 
 		this.settings.snippets.forEach((snippet) => {
 			new Setting(containerEl)
 				.setClass("display-none")
+				.addExtraButton((button) => {
+					button
+						.setIcon(snippet.hiddenInNav ? "eye-off" : "eye")
+						.setTooltip(snippet.hiddenInNav ? "Hide in navigation" : "Show in navigation")
+						.onClick(async () => {
+							snippet.hiddenInNav = !snippet.hiddenInNav;
+							this.plugin.saveSettings();
+							this.plugin.reloadStyle();
+							this.display();
+						});
+				})
 				.addText((text) => {
 					text.setValue(snippet.path).onChange((value) => {
 						snippet.path = value;
@@ -131,16 +133,20 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 					});
 					text.inputEl.addClass("width-100");
 				})
-				.addToggle((toggle) => {
-					toggle
-						.setValue(snippet.hidden)
-						.setTooltip("Display the file/folder in the explorer.")
-						.onChange(async (value) => {
-							snippet.hidden = value;
-							await this.plugin.saveSettings();
+				.addExtraButton((button) => {
+					button
+						.setIcon(snippet.hiddenInBookmarks ? "bookmark" : "bookmark-x")
+						.setTooltip(
+							snippet.hiddenInBookmarks ? "Hide in bookmarks" : "Show in bookmarks"
+						)
+						.onClick(async () => {
+							snippet.hiddenInBookmarks = !snippet.hiddenInBookmarks;
+							this.plugin.saveSettings();
 							this.plugin.reloadStyle();
+							this.display();
 						});
 				})
+
 				.addExtraButton((button) => {
 					button.setIcon("trash").onClick(async () => {
 						this.snippets.delete(snippet);

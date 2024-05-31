@@ -23,7 +23,7 @@ export default class ExplorerHidder extends Plugin {
 	}
 
 	createNavRule(snippet: Hidden, isLast: boolean) {
-		const { path, type, hidden, selector } = snippet;
+		const { path, type, hiddenInNav: hidden, selector } = snippet;
 		if (!hidden || this.settings.showAll) return;
 		const comma = isLast ? "" : ",";
 		const selectorChar = selector ? selector : "";
@@ -32,9 +32,9 @@ export default class ExplorerHidder extends Plugin {
 	}
 
 	createRuleForBookMarks(snippet: Hidden, isLast: boolean) {
-		if (!this.settings.hideInBookmarks) return;
-		const { path, hidden, selector } = snippet;
-		if (!hidden || this.settings.showAll) return;
+		if (!snippet.hiddenInBookmarks) return;
+		const { path, hiddenInBookmarks, selector } = snippet;
+		if (!hiddenInBookmarks || this.settings.showAll) return;
 		const comma = isLast ? "" : ",";
 		const selectorChar = selector ? selector : "";
 		const removeExtension = path.replace(/\.[^/.]+$/, "");
@@ -52,22 +52,34 @@ export default class ExplorerHidder extends Plugin {
 		await this.app.vault.adapter.write(snippetsGeneratedFiles, rules);
 	}
 
-	createRules() {
+	compileNavRules() {
 		let rule = "";
-		let bookmarksRule = "";
-		//remove the "displayed" files/folder/rules (hidden = false)
-		const filteredSnippets = Array.from(this.snippets).filter((s) => s.hidden);
+		const filteredSnippets = Array.from(this.snippets).filter((s) => s.hiddenInNav);
 		filteredSnippets.forEach((snippet) => {
 			const size = filteredSnippets.length - 1;
 			const index = filteredSnippets.indexOf(snippet);
 			const useRule = this.createNavRule(snippet, index === size);
-			const bookmarksRuleUse = this.createRuleForBookMarks(snippet, index === size);
-			if (bookmarksRuleUse) bookmarksRule += bookmarksRuleUse;
 			if (useRule) rule += useRule;
 		});
 		if (rule.length > 0) rule += "{ display: none; }";
-		if (bookmarksRule.length > 0) bookmarksRule += "{ display: none; }";
-		return rule + bookmarksRule;
+		return rule;
+	}
+
+	compileBookmarksRules() {
+		let rule = "";
+		const filteredSnippets = Array.from(this.snippets).filter((s) => s.hiddenInBookmarks);
+		filteredSnippets.forEach((snippet) => {
+			const size = filteredSnippets.length - 1;
+			const index = filteredSnippets.indexOf(snippet);
+			const useRule = this.createRuleForBookMarks(snippet, index === size);
+			if (useRule) rule += useRule;
+		});
+		if (rule.length > 0) rule += "{ display: none; }";
+		return rule;
+	}
+
+	createRules() {
+		return `${this.compileNavRules()}\n${this.compileBookmarksRules()}`;
 	}
 
 	createDocumentStyle() {
@@ -151,7 +163,12 @@ export default class ExplorerHidder extends Plugin {
 						.setIcon("eye-off")
 						.onClick(async () => {
 							const itemType = file instanceof TFile ? "file" : "folder";
-							this.snippets.add({ path: file.path, type: itemType, hidden: true });
+							this.snippets.add({
+								path: file.path,
+								type: itemType,
+								hiddenInNav: true,
+								hiddenInBookmarks: true,
+							});
 							await this.saveSettings();
 							this.reloadStyle();
 						});
@@ -169,7 +186,8 @@ export default class ExplorerHidder extends Plugin {
 				this.snippets.add({
 					path: file.path,
 					type: file instanceof TFile ? "file" : "folder",
-					hidden: true,
+					hiddenInNav: true,
+					hiddenInBookmarks: true,
 				});
 				await this.saveSettings();
 				this.reloadStyle();
