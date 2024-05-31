@@ -21,7 +21,25 @@ So, I decided to create a plugin that will manage that for me!
 ## ⚙️ Usage
 ### Configuration
 
+The settings allow:
+- Choosing between to save the CSS in a snippets (in your `.obsidian/snippets` folder) or directly inject the CSS in the page. Use this if, for example, you want to keep the folder hidden without using the plugin (for example with disabling or uninstalling it).
+- Creating new rules, based on a string. Using attribute selector, you can hide multiple file or folder at once. For example, to hide all the files in a folder, you can set `[startswith] <PathtoFolder>`. See [CSS attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors) for more information.
 
+Each attributes correspond to:
+
+| Attribute   | CSS  | Description                                                                                          |
+| ----------- | ---- | ---------------------------------------------------------------------------------------------------- |
+| Exact       | `=`  | Exact match with the string                                                                          |
+| Contains    | `*=` | Contains the string                                                                                  |
+| Ends with   | `$=` | Ends with the string (suffixe)                                                                       |
+| Starts with | `^=` | Starts with (prefix)                                                                                 |
+| List        | `~=` | String is a whitespace separated list of words, one of which match exactly                           |
+| Subcode     | `|=` | The match can be on exactly the value or can begin with value immediately followed by a hyphen (`-`) |
+
+The setting also display the list of all rules where you can:
+- Hide or display individually the files/folders from the explorer or in the bookmarks
+- Delete the rules
+- For "string" rules, you can edit the attributes. It's not possible for rules added using the file-menu, as they are followed by the path for changes (deleted/renamed/moved).
 
 ## 📥 Installation
 
