@@ -43,7 +43,14 @@ The setting also display the list of all rules where you can:
 
 ### Hiding files/folders
 
-To hide a file or a folder, you can right-click on the file/folder in the explorer or in the bookmarks and select `Hide file/folder`. The file/folder will be hidden from the explorer and the bookmarks.
+To hide a file or a folder, you can right-click on the file/folder in the explorer and select `Hide << name >>`. 
+
+> [!IMPORTANT]
+> The menu of bookmarks doesn't allow (yet) to add items. To hide a file from bookmarks, you can use:
+> - The setting tab
+> - The context menu from the file, if opened in the editor
+
+If `Always hide in bookmark` is enabled, the file/folder will be hidden in the bookmarks too when the command is used from the explorer.
 
 ### Display all or hide all
 
@@ -65,7 +72,7 @@ Using the "eye" ribbon button you can enable or disable all the rules.
 ### 🎼 Languages
 
 - [x] English
-- [ ] French
+- [x] French
 
 To add a translation:
 1. Fork the repository
