@@ -1,17 +1,20 @@
 import { type App, PluginSettingTab, Setting } from "obsidian";
 import type ExplorerHidder from "./main";
 import { AttributeSelector, type Hidden, type ExplorerHidderSettings } from "./interface";
+import type { RulesCompiler } from "./rules";
 
 export class ExplorerHidderSettingTab extends PluginSettingTab {
 	plugin: ExplorerHidder;
 	settings: ExplorerHidderSettings;
 	snippets: Set<Hidden>;
+	compiler: RulesCompiler;
 
-	constructor(app: App, plugin: ExplorerHidder) {
+	constructor(app: App, plugin: ExplorerHidder, compiler: RulesCompiler) {
 		super(app, plugin);
 		this.plugin = plugin;
 		this.settings = plugin.settings;
 		this.snippets = plugin.snippets;
+		this.compiler = compiler;
 	}
 
 	isAlreadyInSet(snippet: Hidden): boolean {
@@ -49,10 +52,22 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 				toggle.setValue(this.plugin.settings.useSnippets).onChange(async (value) => {
 					this.plugin.settings.useSnippets = value;
 					await this.plugin.saveSettings();
-					await this.plugin.enableStyle(value);
+					await this.compiler.enableStyle(value);
 				});
 			});
-
+		new Setting(containerEl)
+			.setName("Always hide in bookmarks")
+			.setDesc(
+				"By default, the plugin will also hide in bookmarks when registered by the file-menu"
+			)
+			.addToggle((toggle) => {
+				toggle
+					.setValue(this.plugin.settings.alwaysHideInBookmarks)
+					.onChange(async (value) => {
+						this.plugin.settings.alwaysHideInBookmarks = value;
+						await this.plugin.saveSettings();
+					});
+			});
 		new Setting(containerEl).setHeading().setName("Snippets");
 		let temp: Hidden = {
 			path: "",
@@ -141,7 +156,7 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 						.onClick(async () => {
 							snippet.hiddenInNav = !snippet.hiddenInNav;
 							this.plugin.saveSettings();
-							this.plugin.reloadStyle();
+							this.compiler.reloadStyle();
 							this.display();
 						});
 				});
@@ -177,7 +192,7 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 						.onClick(async () => {
 							snippet.hiddenInBookmarks = !snippet.hiddenInBookmarks;
 							this.plugin.saveSettings();
-							this.plugin.reloadStyle();
+							this.compiler.reloadStyle();
 							this.display();
 						});
 				})
@@ -186,7 +201,7 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 					button.setIcon("trash").onClick(async () => {
 						this.snippets.delete(snippet);
 						this.plugin.saveSettings();
-						this.plugin.reloadStyle();
+						this.compiler.reloadStyle();
 						this.display();
 					});
 				});
