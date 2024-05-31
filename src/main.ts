@@ -167,7 +167,7 @@ export default class ExplorerHidder extends Plugin {
 								path: file.path,
 								type: itemType,
 								hiddenInNav: true,
-								hiddenInBookmarks: true,
+								hiddenInBookmarks: false,
 							});
 							await this.saveSettings();
 							this.reloadStyle();
@@ -202,6 +202,8 @@ export default class ExplorerHidder extends Plugin {
 				this.reloadStyle();
 			})
 		);
+
+		//add to bookmarks
 	}
 
 	onunload() {
