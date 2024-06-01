@@ -174,6 +174,8 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 						.setValue(snippet.selector || AttributeSelector.Exact)
 						.onChange((value) => {
 							snippet.selector = value as AttributeSelector;
+							this.plugin.saveSettings();
+							this.compiler.reloadStyle();
 						});
 				});
 			}
