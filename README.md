@@ -54,6 +54,7 @@ If `Always hide in bookmark` is enabled, the file/folder will be hidden in the b
 
 > [!TIP]
 > For folder, the rules will be `^=` (starts with) and for files `=` (exact match).
+> Also, in the needs to hide the content of a folder, the rules for folders includes `.nav-file-title[^="path"]` and `.nav-folder-title[^="path"]`
 
 ### Display all or hide all
 
