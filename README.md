@@ -66,7 +66,7 @@ Using the "eye" ribbon button you can enable or disable all the rules.
 
 - [ ] From Obsidian's community plugins
 - [x] Using BRAT with `https://github.com/Mara-Li/obsidian-explorer-hider`  
-	-> Or copy/paste the protocole in your explorer/internet navigator: `obsidian://brat?plugin=https://github.com/Mara-Li/obsidian-explorer-hider`
+	-> [Or use the protocole](obsidian://brat?plugin=https://github.com/Mara-Li/obsidian-explorer-hider)
 - [x] From the release page: 
     - Download the latest release
     - Unzip `explorer-hider.zip` in `.obsidian/plugins/` path
