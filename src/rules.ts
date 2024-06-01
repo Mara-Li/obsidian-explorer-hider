@@ -22,7 +22,9 @@ export class RulesCompiler {
 		const comma = isLast ? "" : ",";
 		const selectorChar = selector ? selector : type === "folder" ? "^" : "";
 		const ruleType = type === "string" ? "" : `.nav-${type}-title`;
-		return `${ruleType}[data-path${selectorChar}="${path}"]${comma} `;
+		const ruleForFilesWithinFolders =
+			type === "folder" ? `, .nav-file-title[data-path^="${path}"]` : "";
+		return `${ruleType}[data-path${selectorChar}="${path}"]${ruleForFilesWithinFolders}${comma} `;
 	}
 
 	createRuleForBookMarks(snippet: Hidden, realName: string | undefined, isLast: boolean) {
