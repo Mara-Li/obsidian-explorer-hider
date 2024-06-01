@@ -20,7 +20,7 @@ export class RulesCompiler {
 		const { path, type, hiddenInNav: hidden, selector } = snippet;
 		if (!hidden || this.settings.showAll) return;
 		const comma = isLast ? "" : ",";
-		const selectorChar = selector ? selector : "";
+		const selectorChar = selector ? selector : type === "folder" ? "^" : "";
 		const ruleType = type === "string" ? "" : `.nav-${type}-title`;
 		return `${ruleType}[data-path${selectorChar}="${path}"]${comma} `;
 	}

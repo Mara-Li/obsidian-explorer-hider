@@ -23,7 +23,7 @@ So, I decided to create a plugin that will manage that for me!
 
 The settings allow:
 - Choosing between to save the CSS in a snippets (in your `.obsidian/snippets` folder) or directly inject the CSS in the page. Use this if, for example, you want to keep the folder hidden without using the plugin (for example with disabling or uninstalling it).
-- Creating new rules, based on a string. Using attribute selector, you can hide multiple file or folder at once. For example, to hide all the files in a folder, you can set `[startswith] <PathtoFolder>`. See [CSS attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors) for more information.
+- Creating new rules, based on a string. Using attribute selector, you can hide multiple file or folder at once. For example, to hide all the files in a folder, you can set `[startswith] <path>`. See [CSS attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors) for more information.
 
 Each attributes correspond to:
 
@@ -51,6 +51,9 @@ To hide a file or a folder, you can right-click on the file/folder in the explor
 > - The context menu from the file, if opened in the editor
 
 If `Always hide in bookmark` is enabled, the file/folder will be hidden in the bookmarks too when the command is used from the explorer.
+
+> [!TIP]
+> For folder, the rules will be `^=` (starts with) and for files `=` (exact match).
 
 ### Display all or hide all
 
