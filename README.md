@@ -27,19 +27,19 @@ The settings allow:
 
 Each attributes correspond to:
 
-| Attribute   | CSS   | Description                                                                                          |
-| ----------- | ----- | ---------------------------------------------------------------------------------------------------- |
-| Exact       | `=`   | Exact match with the string                                                                          |
-| Contains    | `*=`  | Contains the string                                                                                  |
-| Ends with   | `$=`  | Ends with the string (suffixe)                                                                       |
-| Starts with | `^=`  | Starts with (prefix)                                                                                 |
-| List        | `~=`  | String is a whitespace separated list of words, one of which match exactly                           |
-| Subcode     | `\|=` | The match can be on exactly the value or can begin with value immediately followed by a hyphen (`-`) |
+| Attribute               | CSS   | Description                                                                                          |
+| ----------------------- | ----- | ---------------------------------------------------------------------------------------------------- |
+| Exact                   | `=`   | Exact match with the string                                                                          |
+| Contains                | `*=`  | Contains the string                                                                                  |
+| Ends with               | `$=`  | Ends with the string (suffixe)                                                                       |
+| Starts with             | `^=`  | Starts with (prefix)                                                                                 |
+| List                    | `~=`  | String is a whitespace separated list of words, one of which match exactly                           |
+| Text followed by hiphen | `\|=` | The match can be on exactly the value or can begin with value immediately followed by a hyphen (`-`) |
 
 The setting also display the list of all rules where you can:
 - Hide or display individually the files/folders from the explorer or in the bookmarks
 - Delete the rules
-- For "string" rules, you can edit the attributes. It's not possible for rules added using the file-menu, as they are followed by the path for changes (deleted/renamed/moved).
+- For "string" rules, you can edit the attributes and the path. It's not possible for rules added using the file-menu, as they are followed by the path for changes (deleted/renamed/moved).
 
 ### Hiding files/folders
 
