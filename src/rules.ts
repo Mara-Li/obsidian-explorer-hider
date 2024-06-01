@@ -24,7 +24,8 @@ export class RulesCompiler {
 		const ruleType = type === "string" ? "" : `.nav-${type}-title`;
 		const ruleForFilesWithinFolders =
 			type === "folder" ? `, .nav-file-title[data-path^="${path}"]` : "";
-		return `${ruleType}[data-path${selectorChar}="${path}"]${ruleForFilesWithinFolders}${comma} `;
+		const notBookmarks = type === "string" ? `:not(.tree-item:has(.bookmark))` : "";
+		return `${ruleType}[data-path${selectorChar}="${path}"]${notBookmarks}${ruleForFilesWithinFolders}${comma} `;
 	}
 
 	createRuleForBookMarks(snippet: Hidden, realName: string | undefined, isLast: boolean) {
@@ -34,8 +35,7 @@ export class RulesCompiler {
 		const comma = isLast ? "" : ",";
 		const selectorChar = selector ? selector : "";
 		const removeExtension = realName ? realName : path.replace(/\.(.*)$/, "");
-		const ruleType = `.tree-item`;
-		return `${ruleType}[data-path${selectorChar}="${removeExtension}"]${comma} `;
+		return `.tree-item[data-path${selectorChar}="${removeExtension}"]:has(.bookmark)${comma} `;
 	}
 
 	async createSnippetFile() {

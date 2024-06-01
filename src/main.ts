@@ -97,6 +97,8 @@ export default class ExplorerHidder extends Plugin {
 			})
 		);
 
+		await this.compiler.enableStyle(this.settings.useSnippets);
+
 		//follow file renamed/moved to update the settings accordingly
 		this.registerEvent(
 			this.app.vault.on("rename", async (file, oldPath) => {
