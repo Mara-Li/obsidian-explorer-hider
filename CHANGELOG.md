@@ -1,3 +1,8 @@
+## [1.1.5](https://github.com/Mara-Li/obsidian-explorer-hidder/compare/1.1.4...1.1.5) (2024-06-01)
+### Bug Fixes
+
+* typo in the name ([a3568ad](https://github.com/Mara-Li/obsidian-explorer-hidder/commit/a3568ad3d460ecdf4f5c31ae420152c79ff4f2b5))
+
 ## [1.1.4](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.1.3...1.1.4) (2024-06-01)
 ### Bug Fixes
 
