@@ -1,3 +1,9 @@
+## [1.1.4](https://github.com/Mara-Li/obsidian-explorer-hidder/compare/1.1.3...1.1.4) (2024-06-01)
+### Bug Fixes
+
+* a better adjustment around bookmarks & nav ([8b9a016](https://github.com/Mara-Li/obsidian-explorer-hidder/commit/8b9a016e8bdaa2e98dd3ecb907b44041f70de199))
+* forgot to save attribute selector change ([cd56ad0](https://github.com/Mara-Li/obsidian-explorer-hidder/commit/cd56ad08fbe5819a441f2ebafb20c82d5e6cc010))
+
 ## [1.1.3](https://github.com/Mara-Li/obsidian-explorer-hidder/compare/1.1.2...1.1.3) (2024-06-01)
 ### Bug Fixes
 
