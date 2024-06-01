@@ -181,6 +181,7 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 				.addText((text) => {
 					text.setValue(snippet.path).onChange((value) => {
 						snippet.path = value;
+						this.compiler.reloadStyle();
 						this.plugin.saveSettings();
 					});
 					text.inputEl.addClass("width-100");
