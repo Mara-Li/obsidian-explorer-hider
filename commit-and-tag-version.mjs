@@ -8,10 +8,13 @@ import { readFileSync, writeFile } from "fs";
 
 /**
  * Remove text from the file
- * @param {string} path 
+ * @param {string} path
  */
 function removeText(path) {
-	const toRemove = ["# Changelog", "All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines."]
+	const toRemove = [
+		"# Changelog",
+		"All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.",
+	];
 	let changelog = readFileSync(path, "utf8");
 	for (const remove of toRemove) changelog = changelog.replace(remove, "").trim();
 	changelog = changelog.replaceAll(/[\n\r]{3,}/gm, "\n\n").trim();
@@ -60,14 +63,12 @@ const opt = program.opts();
 if (opt.changelog) {
 	const path = opt.beta ? "CHANGELOG-beta.md" : "CHANGELOG.md";
 	removeText(path);
-	console.log(`${heading("Changelog fixed")}: ${info(path)}`)
+	console.log(`${heading("Changelog fixed")}: ${info(path)}`);
 	//wait for the file to be written
 	setTimeout(() => {
 		process.exit(0);
 	}, 1000);
-
 } else {
-
 	const betaMsg = opt.beta ? em("- Pre-release\n\t") : "";
 	const dryRunMsg = opt.dryRun ? em("- Dry run\n\t") : "";
 	const releaseAsMsg = opt.releaseAs
@@ -107,8 +108,7 @@ if (opt.changelog) {
 			tagPrefix: "",
 		})
 			.then(() => {
-				if (!opt.dryRun)
-					removeText("CHANGELOG-beta.md");
+				if (!opt.dryRun) removeText("CHANGELOG-beta.md");
 				console.log("Done");
 			})
 			.catch((err) => {
@@ -138,9 +138,8 @@ if (opt.changelog) {
 			{
 				filename: "manifest.json",
 				type: "json",
-			}
+			},
 		];
-
 
 		commitAndTagVersion({
 			infile: "CHANGELOG.md",
@@ -150,8 +149,7 @@ if (opt.changelog) {
 			releaseAs: opt.releaseAs,
 		})
 			.then(() => {
-				if (!opt.dryRun)
-					removeText("CHANGELOG.md");
+				if (!opt.dryRun) removeText("CHANGELOG.md");
 				console.log("Done");
 			})
 			.catch((err) => {
