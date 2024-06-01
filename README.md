@@ -2,8 +2,8 @@
 
 I have, for years, a snippet named `Folder Hider` that does, basically, that:
 ```css
-.nav-file-title[data-path="path/to/file.md"],
-.nav-folder-title[data-path="path/to/folder"] {
+.nav-file [data-path="path/to/file.md"],
+.nav-folder [data-path^="path/to/folder"] {
     display: none;
 }
 ```
@@ -54,7 +54,6 @@ If `Always hide in bookmark` is enabled, the file/folder will be hidden in the b
 
 > [!TIP]
 > For folder, the rules will be `^=` (starts with) and for files `=` (exact match).
-> Also, in the needs to hide the content of a folder, the rules for folders includes `.nav-file-title[^="path"]` and `.nav-folder-title[^="path"]`
 
 ### Display all or hide all
 
