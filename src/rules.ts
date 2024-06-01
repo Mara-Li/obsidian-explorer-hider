@@ -21,11 +21,9 @@ export class RulesCompiler {
 		if (!hidden || this.settings.showAll) return;
 		const comma = isLast ? "" : ",";
 		const selectorChar = selector ? selector : type === "folder" ? "^" : "";
-		const ruleType = type === "string" ? "" : `.nav-${type}-title`;
-		const ruleForFilesWithinFolders =
-			type === "folder" ? `, .nav-file-title[data-path^="${path}"]` : "";
+		const ruleType = type === "string" ? "" : `.nav-${type} `;
 		const notBookmarks = type === "string" ? `:not(.tree-item:has(.bookmark))` : "";
-		return `${ruleType}[data-path${selectorChar}="${path}"]${notBookmarks}${ruleForFilesWithinFolders}${comma} `;
+		return `${ruleType}[data-path${selectorChar}="${path}"]${notBookmarks}${comma} `;
 	}
 
 	createRuleForBookMarks(snippet: Hidden, realName: string | undefined, isLast: boolean) {
