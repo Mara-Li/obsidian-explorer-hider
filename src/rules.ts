@@ -81,7 +81,6 @@ export class RulesCompiler {
 			if (useRule) rule += useRule;
 		});
 		if (rule.length > 0) rule += "{ display: none; }";
-		console.log(rule);
 		return rule;
 	}
 
