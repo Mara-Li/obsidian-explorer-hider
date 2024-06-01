@@ -21,3 +21,11 @@
 .explorer-hidder input {
 	font-family: var(--font-monospace);
 }
+
+.explorer-hidder input.width-100.path:disabled {
+	border: none;
+}
+
+.explorer-hidder input.width-100.path:active {
+	box-shadow: none;
+}
