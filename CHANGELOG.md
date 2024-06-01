@@ -1,10 +1,4 @@
-# Changelog
-
-All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
-
 ## [1.1.1](https://github.com/Mara-Li/obsidian-explorer-hidder/compare/1.1.0...1.1.1) (2024-06-01)
-
-
 ### Bug Fixes
 
 * disallow path editing for registered "real" folder/files ([eb5c391](https://github.com/Mara-Li/obsidian-explorer-hidder/commit/eb5c391729cbe7796d8c9256350db7a22961cbb3))

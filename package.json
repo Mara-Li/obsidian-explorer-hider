@@ -10,7 +10,7 @@
     "dev": "node esbuild.config.mjs",
     "export": "node esbuild.config.mjs --production --vault",
     "bump": "node commit-and-tag-version.mjs",
-    "postbump": "git commit --amend --no-edit' && git push --follow-tags origin master",
+    "postbump": "git commit --amend --no-edit && git push --follow-tags origin master",
     "predeploy": "pnpm run bump",
     "deploy": "pnpm run export",
     "lint": "pnpm biome lint --apply src/"
