@@ -1,3 +1,8 @@
+## [1.1.3](https://github.com/Mara-Li/obsidian-explorer-hidder/compare/1.1.2...1.1.3) (2024-06-01)
+### Bug Fixes
+
+* file within folder needs to be hidden too ([5e861de](https://github.com/Mara-Li/obsidian-explorer-hidder/commit/5e861de1f451f76217b3bc25ce16a9350b866999))
+
 ## [1.1.2](https://github.com/Mara-Li/obsidian-explorer-hidder/compare/1.1.0...1.1.2) (2024-06-01)
 ### Bug Fixes
 
