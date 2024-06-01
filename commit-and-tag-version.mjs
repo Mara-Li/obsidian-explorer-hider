@@ -45,6 +45,7 @@ program
 	.description("Bump version and create a new tag")
 	.option("-b, --beta", "Pre-release version")
 	.option("--dry-run", "Dry run")
+	.option("-c, --changelog", "Fix the changelog only")
 	.addOption(
 		new Option("-r, --release-as <size>", "release type version").choices([
 			"major",
@@ -55,6 +56,13 @@ program
 
 program.parse();
 const opt = program.opts();
+
+if (opt.changelog) {
+	const path = opt.beta ? "CHANGELOG-beta.md" : "CHANGELOG.md";
+	removeText(path);
+	console.log(`${heading("Changelog fixed")}: ${info(path)}`)
+	process.exit(0);
+}
 
 const betaMsg = opt.beta ? em("- Pre-release\n\t") : "";
 const dryRunMsg = opt.dryRun ? em("- Dry run\n\t") : "";
