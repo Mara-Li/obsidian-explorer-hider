@@ -17,14 +17,14 @@ export interface Hidden {
 	hiddenInBookmarks: boolean;
 }
 
-export interface ExplorerHidderSettings {
+export interface ExplorerHiderSettings {
 	useSnippets: boolean;
 	snippets: Hidden[];
 	showAll: boolean;
 	alwaysHideInBookmarks: boolean;
 }
 
-export const DEFAULT_SETTINGS: ExplorerHidderSettings = {
+export const DEFAULT_SETTINGS: ExplorerHiderSettings = {
 	useSnippets: false,
 	showAll: false,
 	snippets: [],

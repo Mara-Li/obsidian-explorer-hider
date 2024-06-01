@@ -1,16 +1,16 @@
 import { type Menu, type MenuItem, type TAbstractFile, TFile, type App } from "obsidian";
-import type { ExplorerHidderSettings, Hidden } from "./interface";
-import type ExplorerHidder from "./main";
+import type { ExplorerHiderSettings, Hidden } from "./interface";
+import type ExplorerHider from "./main";
 import type { RulesCompiler } from "./rules";
 import i18next from "i18next";
 
 export class ExplorerMenu {
-	settings: ExplorerHidderSettings;
-	plugin: ExplorerHidder;
+	settings: ExplorerHiderSettings;
+	plugin: ExplorerHider;
 	app: App;
 	snippets: Set<Hidden>;
 	compiler: RulesCompiler;
-	constructor(plugin: ExplorerHidder) {
+	constructor(plugin: ExplorerHider) {
 		this.plugin = plugin;
 		this.settings = plugin.settings;
 		this.app = plugin.app;

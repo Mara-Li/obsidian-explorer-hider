@@ -1,16 +1,16 @@
 import { type App, PluginSettingTab, Setting } from "obsidian";
-import type ExplorerHidder from "./main";
-import { AttributeSelector, type Hidden, type ExplorerHidderSettings } from "./interface";
+import type ExplorerHider from "./main";
+import { AttributeSelector, type Hidden, type ExplorerHiderSettings } from "./interface";
 import type { RulesCompiler } from "./rules";
 import i18next from "i18next";
 
-export class ExplorerHidderSettingTab extends PluginSettingTab {
-	plugin: ExplorerHidder;
-	settings: ExplorerHidderSettings;
+export class ExplorerHiderSettingTab extends PluginSettingTab {
+	plugin: ExplorerHider;
+	settings: ExplorerHiderSettings;
 	snippets: Set<Hidden>;
 	compiler: RulesCompiler;
 
-	constructor(app: App, plugin: ExplorerHidder) {
+	constructor(app: App, plugin: ExplorerHider) {
 		super(app, plugin);
 		this.plugin = plugin;
 		this.settings = plugin.settings;
@@ -43,7 +43,7 @@ export class ExplorerHidderSettingTab extends PluginSettingTab {
 	display(): void {
 		const { containerEl } = this;
 		containerEl.empty();
-		containerEl.addClasses(["explorer-hidder"]);
+		containerEl.addClasses(["explorer-hider"]);
 		new Setting(containerEl)
 			.setName(i18next.t("Use a css snippet"))
 			.setDesc(i18next.t("snippetCSSInBg"))

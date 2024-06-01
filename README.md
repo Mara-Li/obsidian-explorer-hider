@@ -1,6 +1,6 @@
-# Explorer Hidder
+# Explorer Hider
 
-I have, for years, a snippet named `Folder Hidder` that does, basically, that:
+I have, for years, a snippet named `Folder Hider` that does, basically, that:
 ```css
 .nav-file-title[data-path="path/to/file.md"],
 .nav-folder-title[data-path="path/to/folder"] {
@@ -68,7 +68,7 @@ Using the "eye" ribbon button you can enable or disable all the rules.
 - [x] Using BRAT with `https://github.com/Mara-Li/`
 - [x] From the release page: 
     - Download the latest release
-    - Unzip `explorer-hidder.zip` in `.obsidian/plugins/` path
+    - Unzip `explorer-hider.zip` in `.obsidian/plugins/` path
     - In Obsidian settings, reload the plugin
     - Enable the plugin
 

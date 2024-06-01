@@ -1,6 +1,6 @@
 {
-	"id": "explorer-hidder",
-	"name": "Explorer Hidder",
+	"id": "explorer-hider",
+	"name": "Explorer Hider",
 	"version": "1.1.4",
 	"minAppVersion": "1.5.12",
 	"description": "Hide a file or a folder from the explorer (and bookmarks) using a little bit of auto-managed CSS!",

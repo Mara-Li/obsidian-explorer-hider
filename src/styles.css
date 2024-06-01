@@ -1,31 +1,31 @@
-.explorer-hidder .setting-item.display-none .setting-item-info {
+.explorer-hider .setting-item.display-none .setting-item-info {
 	display: none;
 }
 
-.explorer-hidder .setting-item .width-100 {
+.explorer-hider .setting-item .width-100 {
 	width: 100%;
 }
 
-.explorer-hidder .is-disabled {
+.explorer-hider .is-disabled {
 	opacity: 0.5;
 }
 
 @media (hover: hover) {
-	.explorer-hidder .clickable-icon.is-disabled:hover,
-	.explorer-hidder .clickable-icon.is-disabled:active {
+	.explorer-hider .clickable-icon.is-disabled:hover,
+	.explorer-hider .clickable-icon.is-disabled:active {
 		background-color: transparent;
 		color: var(--icon-color);
 	}
 }
 
-.explorer-hidder input {
+.explorer-hider input {
 	font-family: var(--font-monospace);
 }
 
-.explorer-hidder input.width-100.path:disabled {
+.explorer-hider input.width-100.path:disabled {
 	border: none;
 }
 
-.explorer-hidder input.width-100.path:active {
+.explorer-hider input.width-100.path:active {
 	box-shadow: none;
 }

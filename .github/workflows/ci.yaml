@@ -48,7 +48,7 @@ jobs:
         needs: echo
 
         with:
-            PLUGIN_NAME: explorer-hidder
+            PLUGIN_NAME: explorer-hider
             CACHE: "pnpm"
         secrets:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -58,7 +58,7 @@ jobs:
         needs: echo
         uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-bump-version.yaml@main
         with:
-            PLUGIN_NAME: explorer-hidder
+            PLUGIN_NAME: explorer-hider
             BETA: ${{ inputs.beta }}
             CACHE: "pnpm"
         secrets:

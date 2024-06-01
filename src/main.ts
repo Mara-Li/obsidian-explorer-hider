@@ -6,9 +6,9 @@ import {
 	TFile,
 } from "obsidian";
 
-import { ExplorerHidderSettingTab } from "./settings";
+import { ExplorerHiderSettingTab } from "./settings";
 import {
-	type ExplorerHidderSettings,
+	type ExplorerHiderSettings,
 	DEFAULT_SETTINGS,
 	type Hidden,
 	RIBBON_ICON_OFF,
@@ -19,8 +19,8 @@ import { RulesCompiler } from "./rules";
 import i18next from "i18next";
 import { resources, translationLanguage } from "./i18n";
 
-export default class ExplorerHidder extends Plugin {
-	settings!: ExplorerHidderSettings;
+export default class ExplorerHider extends Plugin {
+	settings!: ExplorerHiderSettings;
 	snippets: Set<Hidden> = new Set();
 	style: HTMLStyleElement | null = null;
 	compiler: RulesCompiler | null = null;
@@ -67,7 +67,7 @@ export default class ExplorerHidder extends Plugin {
 		});
 		const contextMenu = new ExplorerMenu(this);
 
-		this.addSettingTab(new ExplorerHidderSettingTab(this.app, this));
+		this.addSettingTab(new ExplorerHiderSettingTab(this.app, this));
 
 		//add a button to add a new file or folder to hide
 		this.registerEvent(
