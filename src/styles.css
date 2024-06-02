@@ -29,3 +29,30 @@
 .explorer-hider input.width-100.path:active {
 	box-shadow: none;
 }
+
+.bookmark-button {
+	width: 100%;
+	box-shadow: none !important;
+	justify-content: flex-start;
+	font-weight: var(--normal-weight);
+}
+
+button.bookmark-button {
+	background-color: transparent;
+}
+
+button.bookmark-button:hover {
+	background-color: var(--background-modifier-hover);
+}
+
+.bookmark-name.menu-item-title {
+	flex: none;
+}
+
+.is-tablet button.bookmark-button.menu-item.tappable {
+	padding: var(--size-4-1) var(--size-4-2);
+}
+
+.is-tablet button.bookmark-button.menu-item.tappable:hover {
+	background-color: transparent;
+}

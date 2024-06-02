@@ -43,6 +43,10 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 	display(): void {
 		const { containerEl } = this;
 		containerEl.empty();
+
+		const bookmarkDisabled =
+			this.app.internalPlugins.getEnabledPluginById("bookmarks") === null;
+
 		containerEl.addClasses(["explorer-hider"]);
 		new Setting(containerEl)
 			.setName(i18next.t("Use a css snippet"))
@@ -57,11 +61,34 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName(i18next.t("Always hide in bookmarks"))
 			.setDesc(i18next.t("file-menu"))
+			.setDisabled(bookmarkDisabled)
 			.addToggle((toggle) => {
 				toggle
-					.setValue(this.plugin.settings.alwaysHideInBookmarks)
+					.setValue(bookmarkDisabled)
+					.setTooltip(bookmarkDisabled ? i18next.t("disabled") : "")
+					.setDisabled(bookmarkDisabled)
 					.onChange(async (value) => {
 						this.plugin.settings.alwaysHideInBookmarks = value;
+						await this.plugin.saveSettings();
+					});
+			});
+
+		new Setting(containerEl)
+			.setName(i18next.t("contextMenuButton"))
+			.setDesc(i18next.t("contextMenuButtonDesc"))
+			.setDisabled(bookmarkDisabled)
+			.addToggle((toggle) => {
+				toggle
+					.setTooltip(bookmarkDisabled ? i18next.t("disabled") : "")
+					.setDisabled(bookmarkDisabled)
+					.setValue(this.plugin.settings.buttonInContextBookmark)
+					.onChange(async (value) => {
+						this.plugin.settings.buttonInContextBookmark = value;
+						if (value) {
+							this.plugin.loadBookmarks();
+						} else {
+							this.plugin.unloadBookmarks();
+						}
 						await this.plugin.saveSettings();
 					});
 			});

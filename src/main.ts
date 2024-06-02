@@ -5,6 +5,7 @@ import {
 	type TAbstractFile,
 	TFile,
 } from "obsidian";
+import { around } from "monkey-around";
 
 import { ExplorerHiderSettingTab } from "./settings";
 import {
@@ -18,12 +19,15 @@ import { ExplorerMenu } from "./explorer_menu";
 import { RulesCompiler } from "./rules";
 import i18next from "i18next";
 import { resources, translationLanguage } from "./i18n";
+import { Bookmarks } from "./bookmarks";
 
 export default class ExplorerHider extends Plugin {
 	settings!: ExplorerHiderSettings;
 	snippets: Set<Hidden> = new Set();
 	style: HTMLStyleElement | null = null;
 	compiler: RulesCompiler | null = null;
+	bookmarks: Bookmarks | null = null;
+	activeMonkeys: Record<string, any> = {};
 
 	isAlreadyRegistered(path: string): Hidden | undefined {
 		for (const s of this.snippets) {
@@ -37,6 +41,34 @@ export default class ExplorerHider extends Plugin {
 			icon: this.settings.showAll ? RIBBON_ICON_OFF : RIBBON_ICON_ON,
 			desc: this.settings.showAll ? i18next.t("hide.all") : i18next.t("show.all"),
 		};
+	}
+	/**
+	 * To be honest, I don't know if it's useful. I think unload useless thinks when thinks are disabled is a good practice.
+	 * But I don't know if it's necessary to do it for the bookmarks plugin.
+	 * Also, I don't know if Monkey-around is the best way to do it or safe.
+	 */
+	monkeyPatch() {
+		const bookmarksPlugin = this.app.internalPlugins.getPluginById("bookmarks");
+		if (!bookmarksPlugin) return;
+		this.activeMonkeys.enable = around(bookmarksPlugin.instance, {
+			//@ts-ignore
+			onUserEnable: (oldMethod) => {
+				return () => {
+					this.unloadBookmarks(); //prevent duplicate buttons
+					this.loadBookmarks();
+					oldMethod.apply(bookmarksPlugin.instance);
+				};
+			},
+		});
+		this.activeMonkeys.unload = around(bookmarksPlugin, {
+			onunload: (oldMethod) => {
+				return () => {
+					this.unloadBookmarks();
+					this.bookmarks = null;
+					oldMethod.apply(bookmarksPlugin);
+				};
+			},
+		});
 	}
 
 	async onload() {
@@ -90,15 +122,15 @@ export default class ExplorerHider extends Plugin {
 				contextMenu.hideMultipleInExplorer(menu, files);
 			})
 		);
-
 		this.registerEvent(
 			this.app.workspace.on("layout-ready", async () => {
 				await this.compiler?.enableStyle(this.settings.useSnippets);
+				this.loadBookmarks();
 			})
 		);
+		if (!this.bookmarks && this.app.workspace.layoutReady) this.loadBookmarks();
 
 		await this.compiler.enableStyle(this.settings.useSnippets);
-
 		//follow file renamed/moved to update the settings accordingly
 		this.registerEvent(
 			this.app.vault.on("rename", async (file, oldPath) => {
@@ -125,11 +157,34 @@ export default class ExplorerHider extends Plugin {
 				this.compiler?.reloadStyle();
 			})
 		);
+
+		this.monkeyPatch();
+	}
+
+	loadBookmarks() {
+		if (!this.settings.buttonInContextBookmark) return;
+		const bookmarksPlugin = this.app.internalPlugins.getEnabledPluginById("bookmarks");
+		if (!bookmarksPlugin) {
+			return;
+		}
+		this.bookmarks = new Bookmarks(this, bookmarksPlugin);
+		this.bookmarks.addButtonToPanel();
+		console.log(`[${this.manifest.name}] loaded bookmarks`);
+	}
+
+	unloadBookmarks() {
+		this.bookmarks?.removeButtonFromPanel();
+		this.bookmarks = null;
 	}
 
 	onunload() {
 		console.log(`[${this.manifest.name}] unloaded`);
 		this.style?.detach();
+		this.unloadBookmarks();
+		for (const monkey of Object.values(this.activeMonkeys)) {
+			monkey();
+		}
+		this.activeMonkeys = {};
 	}
 
 	async loadSettings() {

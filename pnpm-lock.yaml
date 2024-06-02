@@ -48,6 +48,9 @@ importers:
       i18next:
         specifier: ^23.10.1
         version: 23.11.5
+      monkey-around:
+        specifier: ^3.0.0
+        version: 3.0.0
       obsidian:
         specifier: latest
         version: 1.5.7-1(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)
@@ -893,6 +896,9 @@ packages:
 
   moment@2.29.4:
     resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
+
+  monkey-around@3.0.0:
+    resolution: {integrity: sha512-jL6uY2lEAoaHxZep1cNRkCZjoIWY4g5VYCjriEWmcyHU7w8NU1+JH57xE251UVTohK0lCxMjv0ZV4ByDLIXEpw==}
 
   ms@2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
@@ -2132,6 +2138,8 @@ snapshots:
   modify-values@1.0.1: {}
 
   moment@2.29.4: {}
+
+  monkey-around@3.0.0: {}
 
   ms@2.1.2: {}
 

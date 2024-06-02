@@ -22,6 +22,7 @@ export interface ExplorerHiderSettings {
 	snippets: Hidden[];
 	showAll: boolean;
 	alwaysHideInBookmarks: boolean;
+	buttonInContextBookmark: boolean;
 }
 
 export const DEFAULT_SETTINGS: ExplorerHiderSettings = {
@@ -29,6 +30,7 @@ export const DEFAULT_SETTINGS: ExplorerHiderSettings = {
 	showAll: false,
 	snippets: [],
 	alwaysHideInBookmarks: false,
+	buttonInContextBookmark: false,
 };
 
 export const RIBBON_ICON_OFF = {

@@ -11,6 +11,9 @@
   "Subcode": "Text followed by hyphen",
   "Use a css snippet": "Use a css snippet",
   "addNewSnippets": "Add a new snippet",
+  "contextMenuButton": "Show a button in the bookmarks context menu",
+  "contextMenuButtonDesc": "Allows you to hide/show a file in bookmarks from the bookmarks menu. \nWarning, experimental feature!",
+  "disabled": "",
   "file-menu": "By default, hiding a file from Explorer will also hide its bookmark (if it exists).",
   "hide": {
     "all": "Enable hiding snippets",
@@ -19,7 +22,7 @@
     "explorer": "Hide in Explorer",
     "explorerWithName": "Hide « {{- name}} » in the explorer",
     "multipleItems": "Hide {{-count}} notes",
-    "withName": "Hide {{- name}}"
+    "withName": "Hide « {{- name}} »"
   },
   "show": {
     "all": "Disable hiding",
