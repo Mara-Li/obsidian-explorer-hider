@@ -15,7 +15,19 @@ export interface Hidden {
 	selector?: AttributeSelector;
 	hiddenInNav: boolean;
 	hiddenInBookmarks: boolean;
+	title?: string; //only used in bookmarks
 }
+
+export const parent = Symbol("parent");
+
+export type BookmarkInternalData = {
+	ctime: number;
+	path?: string;
+	type: string;
+	title?: string;
+	items?: BookmarkInternalData[];
+	[parent]?: BookmarkInternalData | null;
+};
 
 export interface ExplorerHiderSettings {
 	useSnippets: boolean;

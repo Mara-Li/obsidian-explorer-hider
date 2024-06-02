@@ -1,5 +1,5 @@
 import { type App, normalizePath } from "obsidian";
-import type { ExplorerHiderSettings, Hidden } from "./interface";
+import type { BookmarkInternalData, ExplorerHiderSettings, Hidden } from "./interface";
 import type ExplorerHider from "./main";
 
 export class RulesCompiler {
@@ -64,21 +64,22 @@ export class RulesCompiler {
 		const filteredSnippets = Array.from(this.snippets).filter((s) => s.hiddenInBookmarks);
 		const bookmarksPlugin = this.app.internalPlugins.getEnabledPluginById("bookmarks");
 		if (!bookmarksPlugin) return "";
-		const allBookMarksItem: {
-			ctime: number;
-			path: string;
-			type: string;
-			title?: string;
-			//@ts-ignore
-		}[] = bookmarksPlugin.items;
+		//@ts-ignore
+		const allBookMarksItem: BookmarkInternalData[] = bookmarksPlugin.items;
 		filteredSnippets.forEach((snippet) => {
 			const size = filteredSnippets.length - 1;
 			const index = filteredSnippets.indexOf(snippet);
 			//find by the path in the bookmarksItems
-			const path = allBookMarksItem.find((item) => item.path === snippet.path);
-
-			const useRule = this.createRuleForBookMarks(snippet, path?.title, index === size);
-			if (useRule) rule += useRule;
+			const path = allBookMarksItem.find(
+				(item) => item.path === snippet.path || item.title === snippet.title
+			);
+			if (!path && snippet.type === "string") {
+				const useRule = this.createRuleForBookMarks(snippet, undefined, index === size);
+				if (useRule) rule += useRule;
+			} else if (path) {
+				const useRule = this.createRuleForBookMarks(snippet, path?.title, index === size);
+				if (useRule) rule += useRule;
+			}
 		});
 		if (rule.length > 0) rule += "{ display: none; }";
 		return rule;

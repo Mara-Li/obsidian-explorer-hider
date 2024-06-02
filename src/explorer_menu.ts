@@ -54,6 +54,7 @@ export class ExplorerMenu {
 						type: itemType,
 						hiddenInNav: isAlreadyInSet ? isAlreadyInSet.hiddenInNav : false,
 						hiddenInBookmarks: true,
+						title: isAlreadyInSet?.title,
 					});
 					await this.plugin.saveSettings();
 					this.compiler.reloadStyle();
@@ -120,6 +121,7 @@ export class ExplorerMenu {
 					path: file.path,
 					type: itemType,
 					hiddenInNav: true,
+					title: isAlreadyInSet?.title,
 					hiddenInBookmarks: isAlreadyInSet
 						? isAlreadyInSet.hiddenInBookmarks
 						: this.settings.alwaysHideInBookmarks,
@@ -167,6 +169,7 @@ export class ExplorerMenu {
 								path: file.path,
 								type: itemType,
 								hiddenInNav: true,
+								title: isAlreadyInSet?.title,
 								hiddenInBookmarks: isAlreadyInSet
 									? isAlreadyInSet.hiddenInBookmarks
 									: this.settings.alwaysHideInBookmarks,

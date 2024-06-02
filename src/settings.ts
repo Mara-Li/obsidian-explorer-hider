@@ -64,7 +64,7 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 			.setDisabled(bookmarkDisabled)
 			.addToggle((toggle) => {
 				toggle
-					.setValue(bookmarkDisabled)
+					.setValue(this.plugin.settings.alwaysHideInBookmarks)
 					.setTooltip(bookmarkDisabled ? i18next.t("disabled") : "")
 					.setDisabled(bookmarkDisabled)
 					.onChange(async (value) => {
