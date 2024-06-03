@@ -25,7 +25,7 @@ export default class ExplorerHider extends Plugin {
 	settings!: ExplorerHiderSettings;
 	snippets: Set<Hidden> = new Set();
 	style: HTMLStyleElement | null = null;
-	compiler: RulesCompiler | null = null;
+	compiler!: RulesCompiler;
 	bookmarks: Bookmarks | null = null;
 	activeMonkeys: Record<string, any> = {};
 

@@ -192,15 +192,15 @@ export class Bookmarks {
 				: undefined;
 		button.appendChild(name);
 		button.addEventListener("click", async () => {
-			if (isAlreadyInSet) this.plugin.snippets.delete(isAlreadyInSet);
-			this.plugin.snippets.add({
+			const newSnippet: Hidden = {
 				path: pathName,
 				type,
-				hiddenInNav: false,
+				hiddenInNav: isAlreadyInSet ? isAlreadyInSet.hiddenInNav : false,
 				hiddenInBookmarks: true,
 				selector,
 				title: isAlreadyInSet?.title ?? title,
-			});
+			};
+			this.plugin.compiler?.updateSnippet(newSnippet, isAlreadyInSet);
 			await this.plugin.saveSettings();
 			this.plugin.compiler?.reloadStyle();
 		});
@@ -233,15 +233,15 @@ export class Bookmarks {
 				: undefined;
 		button.appendChild(name);
 		button.addEventListener("click", async () => {
-			this.plugin.snippets.delete(isAlreadyInSet);
-			this.plugin.snippets.add({
+			const newSnippet: Hidden = {
 				path: pathName,
 				type,
-				hiddenInNav: false,
+				hiddenInNav: isAlreadyInSet.hiddenInNav ?? false,
 				hiddenInBookmarks: false,
 				selector,
 				title: isAlreadyInSet.title ?? title,
-			});
+			};
+			this.plugin.compiler.updateSnippet(newSnippet, isAlreadyInSet);
 			await this.plugin.saveSettings();
 			this.plugin.compiler?.reloadStyle();
 		});

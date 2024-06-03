@@ -56,3 +56,11 @@ button.bookmark-button:hover {
 .is-tablet button.bookmark-button.menu-item.tappable:hover {
 	background-color: transparent;
 }
+
+.explorer-hider .no-border {
+	border-top: none;
+}
+
+.explorer-hider .margin-left {
+	margin-left: var(--size-4-2);
+}

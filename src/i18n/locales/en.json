@@ -1,6 +1,7 @@
 {
   "Add": "Add",
   "Always hide in bookmarks": "Always hide bookmarks",
+  "Bookmarks": "Bookmarks",
   "Contains": "Contains",
   "Delete": "Remove snippet",
   "Endswith": "Ends with",
@@ -11,6 +12,7 @@
   "Subcode": "Text followed by hyphen",
   "Use a css snippet": "Use a css snippet",
   "addNewSnippets": "Add a new snippet",
+  "bookmarksDesc": "Options for hiding files in bookmarks (if the main plugin is enabled).",
   "contextMenuButton": "Show a button in the bookmarks context menu",
   "contextMenuButtonDesc": "Allows you to hide/show a file in bookmarks from the bookmarks menu. \nWarning, experimental feature!",
   "disabled": "",

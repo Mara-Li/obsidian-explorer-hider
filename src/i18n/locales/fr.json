@@ -1,6 +1,7 @@
 {
   "Add": "Ajouter",
   "Always hide in bookmarks": "Toujours cacher les signets",
+  "Bookmarks": "Signets",
   "Contains": "Contient",
   "Delete": "Supprimer le snippet",
   "Endswith": "Fini avec",
@@ -11,6 +12,7 @@
   "Subcode": "Texte suivi de tiret",
   "Use a css snippet": "Utiliser un snippet css",
   "addNewSnippets": "Ajouter un nouveau snippet",
+  "bookmarksDesc": "Options pour cacher les fichiers dans les signets (si le module principal est activé).",
   "contextMenuButton": "Afficher un bouton dans le menu contextuel des signets",
   "contextMenuButtonDesc": "Permet de cacher/afficher un fichier dans les signets à partir du menu des signets. Attention, fonctionnalité expérimentale !",
   "disabled": "Le module \"signet\" est désactivé : cette option est donc désactivée",

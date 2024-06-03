@@ -16,24 +16,23 @@ export class RulesCompiler {
 		this.style = plugin.style;
 	}
 
-	createNavRule(snippet: Hidden, isLast: boolean) {
+	createNavRule(snippet: Hidden) {
 		const { path, type, hiddenInNav: hidden, selector } = snippet;
 		if (!hidden || this.settings.showAll) return;
-		const comma = isLast ? "" : ",";
+
 		const selectorChar = selector ? selector : type === "folder" ? "^" : "";
 		const ruleType = type === "string" ? "" : `.nav-${type} `;
 		const notBookmarks = type === "string" ? `:not(.tree-item:has(.bookmark))` : "";
-		return `${ruleType}[data-path${selectorChar}="${path}"]${notBookmarks}${comma} `;
+		return `${ruleType}[data-path${selectorChar}="${path}"]${notBookmarks}, `;
 	}
 
-	createRuleForBookMarks(snippet: Hidden, realName: string | undefined, isLast: boolean) {
+	createRuleForBookMarks(snippet: Hidden, realName: string | undefined) {
 		if (!snippet.hiddenInBookmarks) return;
 		const { path, hiddenInBookmarks, selector } = snippet;
 		if (!hiddenInBookmarks || this.settings.showAll) return;
-		const comma = isLast ? "" : ",";
 		const selectorChar = selector ? selector : "";
 		const removeExtension = realName ? realName : path.replace(/\.(.*)$/, "");
-		return `.tree-item[data-path${selectorChar}="${removeExtension}"]:has(.bookmark)${comma} `;
+		return `.tree-item[data-path${selectorChar}="${removeExtension}"]:has(.bookmark), `;
 	}
 
 	async createSnippetFile() {
@@ -50,13 +49,19 @@ export class RulesCompiler {
 		let rule = "";
 		const filteredSnippets = Array.from(this.snippets).filter((s) => s.hiddenInNav);
 		filteredSnippets.forEach((snippet) => {
-			const size = filteredSnippets.length - 1;
-			const index = filteredSnippets.indexOf(snippet);
-			const useRule = this.createNavRule(snippet, index === size);
+			const useRule = this.createNavRule(snippet);
 			if (useRule) rule += useRule;
 		});
-		if (rule.length > 0) rule += "{ display: none; }";
+		if (rule.length > 0) {
+			return `${rule.replace(/, $/, "")} { display: none; }`;
+		}
 		return rule;
+	}
+
+	updateSnippet(newSnippet: Hidden, oldSnippet?: Hidden) {
+		if (oldSnippet) this.snippets.delete(oldSnippet);
+		this.snippets.delete(newSnippet);
+		this.snippets.add(newSnippet);
 	}
 
 	compileBookmarksRules() {
@@ -67,21 +72,22 @@ export class RulesCompiler {
 		//@ts-ignore
 		const allBookMarksItem: BookmarkInternalData[] = bookmarksPlugin.items;
 		filteredSnippets.forEach((snippet) => {
-			const size = filteredSnippets.length - 1;
-			const index = filteredSnippets.indexOf(snippet);
 			//find by the path in the bookmarksItems
 			const path = allBookMarksItem.find(
 				(item) => item.path === snippet.path || item.title === snippet.title
 			);
 			if (!path && snippet.type === "string") {
-				const useRule = this.createRuleForBookMarks(snippet, undefined, index === size);
+				const useRule = this.createRuleForBookMarks(snippet, undefined);
 				if (useRule) rule += useRule;
 			} else if (path) {
-				const useRule = this.createRuleForBookMarks(snippet, path?.title, index === size);
+				const useRule = this.createRuleForBookMarks(snippet, path?.title);
 				if (useRule) rule += useRule;
 			}
 		});
-		if (rule.length > 0) rule += "{ display: none; }";
+		if (rule.length > 0) {
+			return `${rule.replace(/, $/, "")} { display: none; }`;
+		}
+
 		return rule;
 	}
 

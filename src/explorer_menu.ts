@@ -17,10 +17,6 @@ export class ExplorerMenu {
 		this.snippets = plugin.snippets;
 		this.compiler = plugin.compiler as RulesCompiler;
 	}
-	updateSnippet(snippet: Hidden) {
-		this.snippets.delete(snippet);
-		this.snippets.add(snippet);
-	}
 
 	moreOptionsBookmarks(menu: Menu, file: TAbstractFile) {
 		const isAlreadyInSet = this.plugin.isAlreadyRegistered(file.path);
@@ -37,7 +33,7 @@ export class ExplorerMenu {
 					.setIcon(icon.on)
 					.onClick(async () => {
 						isAlreadyInSet.hiddenInBookmarks = false;
-						this.updateSnippet(isAlreadyInSet);
+						this.compiler.updateSnippet(isAlreadyInSet);
 						await this.plugin.saveSettings();
 						this.compiler.reloadStyle();
 					});
@@ -48,14 +44,14 @@ export class ExplorerMenu {
 				.setIcon(icon.off)
 				.onClick(async () => {
 					const itemType = file instanceof TFile ? "file" : "folder";
-					if (isAlreadyInSet) this.snippets.delete(isAlreadyInSet);
-					this.snippets.add({
+					const newSnippet: Hidden = {
 						path: file.path,
 						type: itemType,
 						hiddenInNav: isAlreadyInSet ? isAlreadyInSet.hiddenInNav : false,
 						hiddenInBookmarks: true,
 						title: isAlreadyInSet?.title,
-					});
+					};
+					this.compiler.updateSnippet(newSnippet, isAlreadyInSet);
 					await this.plugin.saveSettings();
 					this.compiler.reloadStyle();
 				});
@@ -94,7 +90,7 @@ export class ExplorerMenu {
 			.setIcon(icon.on)
 			.onClick(async () => {
 				isAlreadyInSet.hiddenInNav = false;
-				this.updateSnippet(isAlreadyInSet);
+				this.compiler.updateSnippet(isAlreadyInSet);
 				await this.plugin.saveSettings();
 				this.compiler.reloadStyle();
 			});
@@ -116,8 +112,7 @@ export class ExplorerMenu {
 			.setTitle(title)
 			.setIcon(icon.off)
 			.onClick(async () => {
-				if (isAlreadyInSet) this.snippets.delete(isAlreadyInSet);
-				this.snippets.add({
+				const newSnippet: Hidden = {
 					path: file.path,
 					type: itemType,
 					hiddenInNav: true,
@@ -125,7 +120,8 @@ export class ExplorerMenu {
 					hiddenInBookmarks: isAlreadyInSet
 						? isAlreadyInSet.hiddenInBookmarks
 						: this.settings.alwaysHideInBookmarks,
-				});
+				};
+				this.compiler.updateSnippet(newSnippet, isAlreadyInSet);
 				await this.plugin.saveSettings();
 				this.compiler.reloadStyle();
 			});
@@ -151,7 +147,7 @@ export class ExplorerMenu {
 						files.forEach((file) => {
 							const isAlreadyInSet = this.plugin.isAlreadyRegistered(file.path);
 							isAlreadyInSet!.hiddenInNav = false;
-							this.updateSnippet(isAlreadyInSet as Hidden);
+							this.compiler.updateSnippet(isAlreadyInSet as Hidden);
 						});
 						await this.plugin.saveSettings();
 						this.compiler.reloadStyle();
@@ -164,8 +160,7 @@ export class ExplorerMenu {
 						files.forEach((file) => {
 							const isAlreadyInSet = this.plugin.isAlreadyRegistered(file.path);
 							const itemType = file instanceof TFile ? "file" : "folder";
-							if (isAlreadyInSet) this.snippets.delete(isAlreadyInSet);
-							this.snippets.add({
+							const newSnippet: Hidden = {
 								path: file.path,
 								type: itemType,
 								hiddenInNav: true,
@@ -173,7 +168,8 @@ export class ExplorerMenu {
 								hiddenInBookmarks: isAlreadyInSet
 									? isAlreadyInSet.hiddenInBookmarks
 									: this.settings.alwaysHideInBookmarks,
-							});
+							};
+							this.compiler.updateSnippet(newSnippet, isAlreadyInSet);
 						});
 						await this.plugin.saveSettings();
 						this.compiler.reloadStyle();

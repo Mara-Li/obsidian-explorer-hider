@@ -58,7 +58,16 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 					await this.compiler.enableStyle(value);
 				});
 			});
+
 		new Setting(containerEl)
+			.setHeading()
+			.setName(i18next.t("Bookmarks"))
+			.setDesc(i18next.t("bookmarksDesc"))
+			.setDisabled(bookmarkDisabled);
+
+		new Setting(containerEl)
+			.setClass("no-border")
+			.setClass("margin-left")
 			.setName(i18next.t("Always hide in bookmarks"))
 			.setDesc(i18next.t("file-menu"))
 			.setDisabled(bookmarkDisabled)
@@ -77,6 +86,7 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 			.setName(i18next.t("contextMenuButton"))
 			.setDesc(i18next.t("contextMenuButtonDesc"))
 			.setDisabled(bookmarkDisabled)
+			.setClass("margin-left")
 			.addToggle((toggle) => {
 				toggle
 					.setTooltip(bookmarkDisabled ? i18next.t("disabled") : "")
