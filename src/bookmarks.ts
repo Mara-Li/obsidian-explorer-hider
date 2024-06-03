@@ -6,6 +6,7 @@ import {
 	type Items,
 	RIBBON_ICON_ON,
 	type BookmarkInternalData,
+	AttributeSelector,
 } from "./interface";
 import type ExplorerHider from "./main";
 import i18next from "i18next";
@@ -177,24 +178,27 @@ export class Bookmarks {
 			typeof bookmarkData === "string"
 				? bookmarkData
 				: bookmarkData.path ?? bookmarkData.title ?? "";
-		const title = typeof bookmarkData !== "string" ? bookmarkData.title : undefined;
+		const title = typeof bookmarkData === "string" ? undefined : bookmarkData.title;
 		const name = button.createDiv({
 			text: i18next.t("hide.bookmarksWithName", {
 				name: pathName,
 			}),
 			cls: ["bookmark-name", "menu-item-title"],
 		});
+		const type = this.bookmarkType(bookmarkData);
+		const selector =
+			isAlreadyInSet?.selector ?? type === "string"
+				? AttributeSelector.StartsWith
+				: undefined;
 		button.appendChild(name);
 		button.addEventListener("click", async () => {
-			const type = this.bookmarkType(bookmarkData);
-
 			if (isAlreadyInSet) this.plugin.snippets.delete(isAlreadyInSet);
 			this.plugin.snippets.add({
 				path: pathName,
 				type,
 				hiddenInNav: false,
 				hiddenInBookmarks: true,
-				selector: isAlreadyInSet?.selector,
+				selector,
 				title: isAlreadyInSet?.title ?? title,
 			});
 			await this.plugin.saveSettings();
@@ -222,16 +226,20 @@ export class Bookmarks {
 			}),
 			cls: ["bookmark-name", "menu-item-title"],
 		});
+		const type = this.bookmarkType(bookmarkData);
+		const selector =
+			isAlreadyInSet.selector ?? type === "string"
+				? AttributeSelector.StartsWith
+				: undefined;
 		button.appendChild(name);
 		button.addEventListener("click", async () => {
-			const type = this.bookmarkType(bookmarkData);
 			this.plugin.snippets.delete(isAlreadyInSet);
 			this.plugin.snippets.add({
 				path: pathName,
 				type,
 				hiddenInNav: false,
 				hiddenInBookmarks: false,
-				selector: isAlreadyInSet.selector,
+				selector,
 				title: isAlreadyInSet.title ?? title,
 			});
 			await this.plugin.saveSettings();
