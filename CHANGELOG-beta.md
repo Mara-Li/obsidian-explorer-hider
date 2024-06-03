@@ -1,3 +1,8 @@
+## [1.2.0-1](https://github.com/Mara-Li/obsidian-explorer-hidder/compare/1.2.0-0...1.2.0-1) (2024-06-03)
+### Bug Fixes
+
+* add selector when added with string ([6516c91](https://github.com/Mara-Li/obsidian-explorer-hidder/commit/6516c91435d1711c0ec6b673154a90288e59a30a))
+
 ## [1.2.0-0](https://github.com/Mara-Li/obsidian-explorer-hidder/compare/1.1.6...1.2.0-0) (2024-06-02)
 ### Features
 
