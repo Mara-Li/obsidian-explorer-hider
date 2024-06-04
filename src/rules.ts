@@ -16,14 +16,30 @@ export class RulesCompiler {
 		this.style = plugin.style;
 	}
 
+	/**
+	 * The best for folder is to use
+	 * .nav-folder-title[data-path^="path"], .nav-folder[data-path^="path"] + .nav-folder-children { display: none; }
+	 * @param snippet {Hidden}
+	 * @returns {string}
+	 */
+	createRuleFolderTitle(snippet: Hidden): string | undefined {
+		const { path, hiddenInNav: hidden, selector } = snippet;
+		const selectorChar = selector ? selector : "^";
+		if (snippet.type === "folder") {
+			if (!hidden || this.settings.showAll) return;
+			return `.nav-folder-title[data-path${selectorChar}="${path}"], .nav-folder-title[data-path${selectorChar}="${path}"] + .nav-folder-children, `;
+		} else if (snippet.type === "string") {
+			return `.nav-file [data-path="${path}"], `;
+		} else {
+			return `[data-path="${path}"]:not(.tree-item:has(.bookmark)), `;
+		}
+	}
+
 	createNavRule(snippet: Hidden) {
-		const { path, type, hiddenInNav: hidden, selector } = snippet;
+		const { hiddenInNav: hidden } = snippet;
 		if (!hidden || this.settings.showAll) return;
 
-		const selectorChar = selector ? selector : type === "folder" ? "^" : "";
-		const ruleType = type === "string" ? "" : `.nav-${type} `;
-		const notBookmarks = type === "string" ? `:not(.tree-item:has(.bookmark))` : "";
-		return `${ruleType}[data-path${selectorChar}="${path}"]${notBookmarks}, `;
+		return this.createRuleFolderTitle(snippet);
 	}
 
 	createRuleForBookMarks(snippet: Hidden, realName: string | undefined) {

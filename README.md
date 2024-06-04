@@ -4,7 +4,8 @@ For years, I have used a snippet named `Folder Hider` that does basically this:
 
 ```css
 .nav-file [data-path="path/to/file.md"],
-.nav-folder [data-path^="path/to/folder"] {
+.nav-folder-title[data-path^="path/to/folder"],
+.nav-folder-title[data-path^="path/to/folder"] + .nav-folder-children{
     display: none;
 }
 ```
