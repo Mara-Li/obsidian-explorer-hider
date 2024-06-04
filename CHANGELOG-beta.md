@@ -1,3 +1,8 @@
+## [1.2.0-3](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.2.0-2...1.2.0-3) (2024-06-04)
+### Bug Fixes
+
+* better handle rules for folder ([98892ea](https://github.com/Mara-Li/obsidian-explorer-hider/commit/98892ea7e68761f4dc9fc6a7245588fc8cd39e39))
+
 ## [1.2.0-2](https://github.com/Mara-Li/obsidian-explorer-hidder/compare/1.2.0-1...1.2.0-2) (2024-06-04)
 
 ## [1.2.0-1](https://github.com/Mara-Li/obsidian-explorer-hidder/compare/1.2.0-0...1.2.0-1) (2024-06-03)
