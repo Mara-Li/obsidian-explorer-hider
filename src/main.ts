@@ -110,16 +110,20 @@ export default class ExplorerHider extends Plugin {
 					if (source === "more-options") {
 						contextMenu.moreOptionsNav(menu, file);
 						contextMenu.moreOptionsBookmarks(menu, file);
+						menu.addSeparator();
 						return;
 					}
 					contextMenu.explorerMenu(menu, file);
+					menu.addSeparator();
 				}
 			)
 		);
 
 		this.registerEvent(
 			this.app.workspace.on("files-menu", (menu: Menu, files: TAbstractFile[]) => {
+				menu.addSeparator();
 				contextMenu.hideMultipleInExplorer(menu, files);
+				menu.addSeparator();
 			})
 		);
 		this.registerEvent(
