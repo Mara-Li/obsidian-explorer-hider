@@ -1,3 +1,8 @@
+## [1.2.0-4](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.2.0-3...1.2.0-4) (2024-06-05)
+### Bug Fixes
+
+* use setIcon instead of directSVG ([720d0f5](https://github.com/Mara-Li/obsidian-explorer-hider/commit/720d0f5e960e264cad2f6bbfe69454050b1a4226))
+
 ## [1.2.0-3](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.2.0-2...1.2.0-3) (2024-06-04)
 ### Bug Fixes
 
