@@ -1,10 +1,8 @@
-import { type InternalPluginInstance, sanitizeHTMLToDom } from "obsidian";
+import { type InternalPluginInstance, sanitizeHTMLToDom, setIcon } from "obsidian";
 import {
 	type Hidden,
-	RIBBON_ICON_OFF,
 	type ExplorerHiderSettings,
 	type Items,
-	RIBBON_ICON_ON,
 	type BookmarkInternalData,
 	AttributeSelector,
 } from "./interface";
@@ -173,7 +171,7 @@ export class Bookmarks {
 
 		button.addClasses(["bookmark-button", "menu-item", "tappable"]);
 		const svg = button.createDiv({ cls: ["menu-item-icon"] });
-		svg.appendChild(sanitizeHTMLToDom(RIBBON_ICON_OFF.svg));
+		setIcon(svg, "eye-off")
 		const pathName =
 			typeof bookmarkData === "string"
 				? bookmarkData
@@ -214,7 +212,7 @@ export class Bookmarks {
 		const button = this.activeDocument.createElement("button");
 		button.addClasses(["bookmark-button", "menu-item", "tappable"]);
 		const svg = button.createDiv({ cls: ["menu-item-icon"] });
-		svg.appendChild(sanitizeHTMLToDom(RIBBON_ICON_ON.svg));
+		setIcon(svg, "eye");
 		const pathName =
 			typeof bookmarkData === "string"
 				? bookmarkData

@@ -4,6 +4,7 @@ import {
 	sanitizeHTMLToDom,
 	type TAbstractFile,
 	TFile,
+	setIcon
 } from "obsidian";
 import { around } from "monkey-around";
 
@@ -11,9 +12,7 @@ import { ExplorerHiderSettingTab } from "./settings";
 import {
 	type ExplorerHiderSettings,
 	DEFAULT_SETTINGS,
-	type Hidden,
-	RIBBON_ICON_OFF,
-	RIBBON_ICON_ON,
+	type Hidden
 } from "./interface";
 import { ExplorerMenu } from "./explorer_menu";
 import { RulesCompiler } from "./rules";
@@ -38,7 +37,7 @@ export default class ExplorerHider extends Plugin {
 
 	reloadIcon() {
 		return {
-			icon: this.settings.showAll ? RIBBON_ICON_OFF : RIBBON_ICON_ON,
+			icon: this.settings.showAll ? "eye-off" : "eye",
 			desc: this.settings.showAll ? i18next.t("hide.all") : i18next.t("show.all"),
 		};
 	}
@@ -84,18 +83,14 @@ export default class ExplorerHider extends Plugin {
 		this.compiler = new RulesCompiler(this) as RulesCompiler;
 		const { icon, desc } = this.reloadIcon();
 		// This creates an icon in the left ribbon.
-		const ribbonEye = this.addRibbonIcon(icon.name, desc, () => {
+		const ribbonEye = this.addRibbonIcon(icon, desc, async () => {
 			this.settings.showAll = !this.settings.showAll;
-			this.saveSettings();
+			await this.saveSettings();
 			this.compiler?.reloadStyle();
 			//update the icon and the desc using the HTML element
 			const { icon, desc } = this.reloadIcon();
 			ribbonEye.ariaLabel = desc;
-			const oldIcon = ribbonEye.querySelector("svg");
-			if (oldIcon) {
-				oldIcon.remove();
-				ribbonEye.appendChild(sanitizeHTMLToDom(icon.svg));
-			}
+			setIcon(ribbonEye, icon);
 		});
 		const contextMenu = new ExplorerMenu(this);
 
