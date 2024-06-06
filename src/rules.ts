@@ -28,10 +28,10 @@ export class RulesCompiler {
 		if (snippet.type === "folder") {
 			if (!hidden || this.settings.showAll) return;
 			return `.nav-folder-title[data-path${selectorChar}="${path}"], .nav-folder-title[data-path${selectorChar}="${path}"] + .nav-folder-children, `;
-		} else if (snippet.type === "string") {
+		} else if (snippet.type === "file") {
 			return `.nav-file [data-path="${path}"], `;
 		} else {
-			return `[data-path="${path}"]:not(.tree-item:has(.bookmark)), `;
+			return `.tree-item [data-path${selectorChar}="${path}"], `;
 		}
 	}
 
