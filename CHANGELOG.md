@@ -1,3 +1,8 @@
+## [1.2.0](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.2.0-4...1.2.0) (2024-06-06)
+### Bug Fixes
+
+* crash on string rules ([33248cb](https://github.com/Mara-Li/obsidian-explorer-hider/commit/33248cb9768fe972b729cb7333ff188205f3eebb))
+
 ## [1.1.6](https://github.com/Mara-Li/obsidian-explorer-hidder/compare/1.1.5...1.1.6) (2024-06-01)
 
 ## [1.1.5](https://github.com/Mara-Li/obsidian-explorer-hidder/compare/1.1.4...1.1.5) (2024-06-01)
