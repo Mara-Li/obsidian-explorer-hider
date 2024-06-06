@@ -87,6 +87,23 @@ Each attribute corresponds to:
 | List                    | `~=`   | String is a whitespace-separated list of words, one of which matches exactly                           |
 | Text followed by hyphen | `\|=`  | The match can be on exactly the value or can begin with the value immediately followed by a hyphen (`-`) |
 
+The result will be:
+- For explorer:
+   ```css
+   .tree-item [data-path{selector}="path"] { /* Notice the space between the class and the attribute */
+      display: none;
+   }
+   ```
+- For bookmarks:
+   ```css
+   .tree-item[data-path{selector}="path"] { 
+      display: none;
+   }
+   ```
+
+> [!Note]
+> If the tree for bookmarks and explorer is changed by the Obsidian team, the plugin/snippets will break. I will try to keep it updated, but I can't guarantee it.
+
 ## 📥 Installation
 
 - [ ] From Obsidian's community plugins

@@ -48,7 +48,7 @@ export class RulesCompiler {
 		if (!hiddenInBookmarks || this.settings.showAll) return;
 		const selectorChar = selector ? selector : "";
 		const removeExtension = realName ? realName : path.replace(/\.(.*)$/, "");
-		return `.tree-item[data-path${selectorChar}="${removeExtension}"]:has(.bookmark), `;
+		return `.tree-item[data-path${selectorChar}="${removeExtension}"], `;
 	}
 
 	async createSnippetFile() {
