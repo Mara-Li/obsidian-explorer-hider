@@ -13,13 +13,13 @@
     "postbump": "git push --follow-tags origin master",
     "predeploy": "pnpm run bump",
     "deploy": "pnpm run export",
-    "lint": "pnpm biome lint --apply src/"
+    "lint": "pnpm biome format --write src/"
   },
   "keywords": [],
   "author": "Mara-Li",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "@biomejs/biome": "1.7.3",
+    "@biomejs/biome": "1.8.3",
     "@types/electron": "npm:@ophidian/electron-types@^24.3.1",
     "@types/node": "^20.12.13",
     "@types/obsidian-typings": "npm:obsidian-typings@^1.1.6",

@@ -1,19 +1,8 @@
-import {
-	type Menu,
-	Plugin,
-	sanitizeHTMLToDom,
-	type TAbstractFile,
-	TFile,
-	setIcon
-} from "obsidian";
+import { type Menu, Plugin, type TAbstractFile, TFile, setIcon } from "obsidian";
 import { around } from "monkey-around";
 
 import { ExplorerHiderSettingTab } from "./settings";
-import {
-	type ExplorerHiderSettings,
-	DEFAULT_SETTINGS,
-	type Hidden
-} from "./interface";
+import { type ExplorerHiderSettings, DEFAULT_SETTINGS, type Hidden } from "./interface";
 import { ExplorerMenu } from "./explorer_menu";
 import { RulesCompiler } from "./rules";
 import i18next from "i18next";
