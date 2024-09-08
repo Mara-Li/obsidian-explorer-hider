@@ -35,6 +35,7 @@ export interface ExplorerHiderSettings {
 	showAll: boolean;
 	alwaysHideInBookmarks: boolean;
 	buttonInContextBookmark: boolean;
+	obsidianExclude?: boolean;
 }
 
 export const DEFAULT_SETTINGS: ExplorerHiderSettings = {
@@ -44,4 +45,3 @@ export const DEFAULT_SETTINGS: ExplorerHiderSettings = {
 	alwaysHideInBookmarks: false,
 	buttonInContextBookmark: false,
 };
-

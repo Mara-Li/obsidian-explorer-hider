@@ -48,6 +48,19 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 			this.app.internalPlugins.getEnabledPluginById("bookmarks") === null;
 
 		containerEl.addClasses(["explorer-hider"]);
+
+		new Setting(containerEl)
+			.setName(i18next.t("excludedFiles.title"))
+			.setDesc(i18next.t("excludedFiles.desc"))
+			.addToggle((toggle) => {
+				toggle
+					.setValue(this.plugin.settings.obsidianExclude ?? false)
+					.onChange(async (value) => {
+						this.plugin.settings.obsidianExclude = value;
+						await this.plugin.saveSettings();
+					});
+			});
+
 		new Setting(containerEl)
 			.setName(i18next.t("Use a css snippet"))
 			.setDesc(i18next.t("snippetCSSInBg"))
