@@ -57,6 +57,11 @@ For [`string` rules](#creating-new-rules), you can also edit the attribute selec
 
 You can choose to save the CSS in a snippet (in your `.obsidian/snippets` folder) or directly inject it into the page. Use this if, for example, you want to keep the folder hidden without using the plugin (for instance, when disabling or uninstalling it).
 
+You can also choose to automatically hide excluded files (obsidian files & folder settings).
+
+> [!NOTE]
+> If you add files in the filter, you need to reload the hidden files to apply the changes.
+
 ### Bookmarks
 
 > [!warning] 
@@ -106,7 +111,7 @@ The result will be:
 
 ## 📥 Installation
 
-- [ ] From Obsidian's community plugins
+- [x] From Obsidian's community plugins
 - [X] Using BRAT with `https://github.com/Mara-Li/obsidian-explorer-hider`  
    → Or use the protocol by pasting it in your web browser: `obsidian://brat?plugin=https://github.com/Mara-Li/obsidian-explorer-hider`
 - [X] From the release page:

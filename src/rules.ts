@@ -63,7 +63,14 @@ export class RulesCompiler {
 
 	compileNavRules() {
 		let rule = "";
-		const filteredSnippets = Array.from(this.snippets).filter((s) => s.hiddenInNav);
+		const cloneSnippets = new Set(this.snippets);
+		if (this.settings.obsidianExclude) {
+			const excludedFiles = this.plugin.convertObsidianToHidden();
+			for (const exclude of excludedFiles) {
+				cloneSnippets.add(exclude);
+			}
+		}
+		const filteredSnippets = Array.from(cloneSnippets).filter((s) => s.hiddenInNav);
 		filteredSnippets.forEach((snippet) => {
 			const useRule = this.createNavRule(snippet);
 			if (useRule) rule += useRule;
@@ -137,8 +144,8 @@ export class RulesCompiler {
 		this.app.workspace.trigger("css-change");
 	}
 
-	async reloadStyle(newSnippets: Set<Hidden>) {
-		this.snippets = newSnippets;
+	async reloadStyle(newSnippets?: Set<Hidden>) {
+		this.snippets = newSnippets ?? this.plugin.snippets;
 		this.style?.detach();
 		if (this.settings.useSnippets) await this.createSnippetFile();
 		else this.createDocumentStyle();

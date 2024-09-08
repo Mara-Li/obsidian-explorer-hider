@@ -56,16 +56,9 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 				toggle
 					.setValue(this.plugin.settings.obsidianExclude ?? false)
 					.onChange(async (value) => {
-						this.plugin.settings.obsidianExclude = value;
-						this.snippets = new Set(
-								[...this.snippets].filter((s) => !s.fromObsidian)
-							);
-						if (value) {
-							const excludedFolder = new Set(this.plugin.convertObsidianToHidden());
-							this.snippets = new Set([...this.snippets, ...excludedFolder]);
-						}
+						this.settings.obsidianExclude = value;
+						await this.compiler.reloadStyle();
 						await this.plugin.saveSettings();
-						await this.compiler.reloadStyle(this.snippets);
 					});
 			});
 
@@ -184,8 +177,8 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 		this.disablePlusButton(temp);
 		new Setting(containerEl).setHeading().setName("Snippets");
 
-		this.settings.snippets.forEach((snippet) => {
-			if (snippet.fromObsidian) return;
+		for (const snippet of this.snippets) {
+			if (snippet.fromObsidian) continue;
 			const icon = {
 				bookmark: "bookmark",
 				nav: "file",
@@ -277,6 +270,6 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 							this.display();
 						});
 				});
-		});
+		}
 	}
 }

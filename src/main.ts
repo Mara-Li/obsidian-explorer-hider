@@ -58,6 +58,8 @@ export default class ExplorerHider extends Plugin {
 			},
 		});
 	}
+	
+	
 
 	async onload() {
 		console.log(`[${this.manifest.name}] loaded`);
@@ -75,7 +77,7 @@ export default class ExplorerHider extends Plugin {
 		const ribbonEye = this.addRibbonIcon(icon, desc, async () => {
 			this.settings.showAll = !this.settings.showAll;
 			await this.saveSettings();
-			await this.compiler?.reloadStyle(this.snippets);
+			await this.compiler?.reloadStyle();
 			//update the icon and the desc using the HTML element
 			const { icon, desc } = this.reloadIcon();
 			ribbonEye.ariaLabel = desc;
@@ -116,7 +118,7 @@ export default class ExplorerHider extends Plugin {
 				await this.loadBookmarks();
 			})
 		);
-		if (!this.bookmarks && this.app.workspace.layoutReady) this.loadBookmarks();
+		if (!this.bookmarks && this.app.workspace.layoutReady) await this.loadBookmarks();
 
 		await this.compiler.enableStyle(this.settings.useSnippets);
 		//follow file renamed/moved to update the settings accordingly
@@ -177,17 +179,6 @@ export default class ExplorerHider extends Plugin {
 
 	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-		this.snippets = new Set();
-		const excludedFiles = this.convertObsidianToHidden();
-		const allHidden = [...this.settings.snippets, ...excludedFiles];
-		//sometimes, set doesn't remove the duplicates, so we remove them manually based on the path
-		const uniqueSnippets: Set<string> = new Set();
-		for (const s of allHidden) {
-			if (!uniqueSnippets.has(s.path)) {
-				uniqueSnippets.add(s.path);
-				this.snippets.add(s);
-			}
-		}
 	}
 	
 	convertObsidianToHidden(): Hidden[] {
@@ -210,7 +201,6 @@ export default class ExplorerHider extends Plugin {
 
 	async saveSettings() {
 		//prevent duplicate entries
-
 		this.settings.snippets = Array.from(this.snippets);
 		await this.saveData(this.settings);
 	}
