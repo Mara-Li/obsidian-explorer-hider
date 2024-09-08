@@ -200,7 +200,7 @@ export class Bookmarks {
 			};
 			this.plugin.compiler?.updateSnippet(newSnippet, isAlreadyInSet);
 			await this.plugin.saveSettings();
-			this.plugin.compiler?.reloadStyle();
+			await this.plugin.compiler?.reloadStyle();
 		});
 		return button;
 	}
@@ -241,7 +241,7 @@ export class Bookmarks {
 			};
 			this.plugin.compiler.updateSnippet(newSnippet, isAlreadyInSet);
 			await this.plugin.saveSettings();
-			this.plugin.compiler?.reloadStyle();
+			await this.plugin.compiler?.reloadStyle();
 		});
 		return button;
 	}

@@ -75,7 +75,7 @@ export default class ExplorerHider extends Plugin {
 		const ribbonEye = this.addRibbonIcon(icon, desc, async () => {
 			this.settings.showAll = !this.settings.showAll;
 			await this.saveSettings();
-			this.compiler?.reloadStyle();
+			await this.compiler?.reloadStyle();
 			//update the icon and the desc using the HTML element
 			const { icon, desc } = this.reloadIcon();
 			ribbonEye.ariaLabel = desc;
@@ -133,7 +133,7 @@ export default class ExplorerHider extends Plugin {
 					hiddenInBookmarks: true,
 				});
 				await this.saveSettings();
-				this.compiler?.reloadStyle();
+				await this.compiler?.reloadStyle();
 			})
 		);
 		this.registerEvent(
@@ -142,7 +142,7 @@ export default class ExplorerHider extends Plugin {
 				if (!isAlreadyInSet) return;
 				this.snippets.delete(isAlreadyInSet);
 				await this.saveSettings();
-				this.compiler?.reloadStyle();
+				await this.compiler?.reloadStyle();
 			})
 		);
 
