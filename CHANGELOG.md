@@ -1,3 +1,15 @@
+## [1.3.0](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.2.0...1.3.0) (2024-09-08)
+### Features
+
+* automatically include excluded files from Obsidian ([ec57a69](https://github.com/Mara-Li/obsidian-explorer-hider/commit/ec57a69fc21db754cb62a41fc8cd7a15782d5e16))
+
+### Bug Fixes
+
+* forgot await for reloading style ([1209f15](https://github.com/Mara-Li/obsidian-explorer-hider/commit/1209f1564e18c31b33f652b35f9055194df04705))
+* reload from obsidian filter explode the plugin ([437fbac](https://github.com/Mara-Li/obsidian-explorer-hider/commit/437fbac21482c5de715c3452eef5688c0dc211f6))
+* reload style doesn't take account new settings ([2304458](https://github.com/Mara-Li/obsidian-explorer-hider/commit/2304458c4983f1c25ec8e75418e9111d5425ae7f))
+* take the locale from storage instead of moment ([acf2fde](https://github.com/Mara-Li/obsidian-explorer-hider/commit/acf2fdec3370fa0e1a3d011e16dff925df141fbf))
+
 ## [1.2.0](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.2.0-4...1.2.0) (2024-06-06)
 ### Bug Fixes
 
