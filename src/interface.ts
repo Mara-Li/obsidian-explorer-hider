@@ -16,6 +16,7 @@ export interface Hidden {
 	hiddenInNav: boolean;
 	hiddenInBookmarks: boolean;
 	title?: string; //only used in bookmarks
+	fromObsidian?:boolean;
 }
 
 export const parent = Symbol("parent");

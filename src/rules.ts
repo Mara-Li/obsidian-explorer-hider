@@ -137,7 +137,8 @@ export class RulesCompiler {
 		this.app.workspace.trigger("css-change");
 	}
 
-	async reloadStyle() {
+	async reloadStyle(newSnippets: Set<Hidden>) {
+		this.snippets = newSnippets;
 		this.style?.detach();
 		if (this.settings.useSnippets) await this.createSnippetFile();
 		else this.createDocumentStyle();

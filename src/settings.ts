@@ -57,7 +57,15 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 					.setValue(this.plugin.settings.obsidianExclude ?? false)
 					.onChange(async (value) => {
 						this.plugin.settings.obsidianExclude = value;
+						this.snippets = new Set(
+								[...this.snippets].filter((s) => !s.fromObsidian)
+							);
+						if (value) {
+							const excludedFolder = new Set(this.plugin.convertObsidianToHidden());
+							this.snippets = new Set([...this.snippets, ...excludedFolder]);
+						}
 						await this.plugin.saveSettings();
+						await this.compiler.reloadStyle(this.snippets);
 					});
 			});
 
@@ -108,7 +116,7 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 					.onChange(async (value) => {
 						this.plugin.settings.buttonInContextBookmark = value;
 						if (value) {
-							this.plugin.loadBookmarks();
+							await this.plugin.loadBookmarks();
 						} else {
 							this.plugin.unloadBookmarks();
 						}
@@ -177,6 +185,7 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 		new Setting(containerEl).setHeading().setName("Snippets");
 
 		this.settings.snippets.forEach((snippet) => {
+			if (snippet.fromObsidian) return;
 			const icon = {
 				bookmark: "bookmark",
 				nav: "file",
@@ -208,7 +217,7 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 						.onClick(async () => {
 							snippet.hiddenInNav = !snippet.hiddenInNav;
 							await this.plugin.saveSettings();
-							await this.compiler.reloadStyle();
+							await this.compiler.reloadStyle(this.snippets);
 							this.display();
 						});
 				});
@@ -225,7 +234,7 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 						.onChange(async (value) => {
 							snippet.selector = value as AttributeSelector;
 							await this.plugin.saveSettings();
-							await this.compiler.reloadStyle();
+							await this.compiler.reloadStyle(this.snippets);
 						});
 				});
 			}
@@ -236,7 +245,7 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 						.setDisabled(snippet.type !== "string")
 						.onChange(async (value) => {
 							snippet.path = value;
-							await this.compiler.reloadStyle();
+							await this.compiler.reloadStyle(this.snippets);
 							await this.plugin.saveSettings();
 						});
 					text.inputEl.addClasses(["width-100", "path"]);
@@ -252,7 +261,7 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 						.onClick(async () => {
 							snippet.hiddenInBookmarks = !snippet.hiddenInBookmarks;
 							await this.plugin.saveSettings();
-							await this.compiler.reloadStyle();
+							await this.compiler.reloadStyle(this.snippets);
 							this.display();
 						});
 				})
@@ -264,7 +273,7 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 						.onClick(async () => {
 							this.snippets.delete(snippet);
 							await this.plugin.saveSettings();
-							await this.compiler.reloadStyle();
+							await this.compiler.reloadStyle(this.snippets);
 							this.display();
 						});
 				});
