@@ -48,6 +48,27 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 			this.app.internalPlugins.getEnabledPluginById("bookmarks") === null;
 
 		containerEl.addClasses(["explorer-hider"]);
+
+		new Setting(containerEl)
+			.setName(i18next.t("excludedFiles.title"))
+			.setDesc(i18next.t("excludedFiles.desc"))
+			.addToggle((toggle) => {
+				toggle
+					.setValue(this.plugin.settings.obsidianExclude ?? false)
+					.onChange(async (value) => {
+						this.plugin.settings.obsidianExclude = value;
+						this.snippets = new Set(
+								[...this.snippets].filter((s) => !s.fromObsidian)
+							);
+						if (value) {
+							const excludedFolder = new Set(this.plugin.convertObsidianToHidden());
+							this.snippets = new Set([...this.snippets, ...excludedFolder]);
+						}
+						await this.plugin.saveSettings();
+						await this.compiler.reloadStyle(this.snippets);
+					});
+			});
+
 		new Setting(containerEl)
 			.setName(i18next.t("Use a css snippet"))
 			.setDesc(i18next.t("snippetCSSInBg"))
@@ -95,7 +116,7 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 					.onChange(async (value) => {
 						this.plugin.settings.buttonInContextBookmark = value;
 						if (value) {
-							this.plugin.loadBookmarks();
+							await this.plugin.loadBookmarks();
 						} else {
 							this.plugin.unloadBookmarks();
 						}
@@ -164,6 +185,7 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 		new Setting(containerEl).setHeading().setName("Snippets");
 
 		this.settings.snippets.forEach((snippet) => {
+			if (snippet.fromObsidian) return;
 			const icon = {
 				bookmark: "bookmark",
 				nav: "file",
@@ -194,8 +216,8 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 						)
 						.onClick(async () => {
 							snippet.hiddenInNav = !snippet.hiddenInNav;
-							this.plugin.saveSettings();
-							this.compiler.reloadStyle();
+							await this.plugin.saveSettings();
+							await this.compiler.reloadStyle(this.snippets);
 							this.display();
 						});
 				});
@@ -209,10 +231,10 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 						.addOption(AttributeSelector.StartsWith, i18next.t("Startswith"))
 						.addOption(AttributeSelector.Subcode, i18next.t("Subcode"))
 						.setValue(snippet.selector || AttributeSelector.Exact)
-						.onChange((value) => {
+						.onChange(async (value) => {
 							snippet.selector = value as AttributeSelector;
-							this.plugin.saveSettings();
-							this.compiler.reloadStyle();
+							await this.plugin.saveSettings();
+							await this.compiler.reloadStyle(this.snippets);
 						});
 				});
 			}
@@ -221,10 +243,10 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 					text
 						.setValue(snippet.path)
 						.setDisabled(snippet.type !== "string")
-						.onChange((value) => {
+						.onChange(async (value) => {
 							snippet.path = value;
-							this.compiler.reloadStyle();
-							this.plugin.saveSettings();
+							await this.compiler.reloadStyle(this.snippets);
+							await this.plugin.saveSettings();
 						});
 					text.inputEl.addClasses(["width-100", "path"]);
 				})
@@ -238,8 +260,8 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 						)
 						.onClick(async () => {
 							snippet.hiddenInBookmarks = !snippet.hiddenInBookmarks;
-							this.plugin.saveSettings();
-							this.compiler.reloadStyle();
+							await this.plugin.saveSettings();
+							await this.compiler.reloadStyle(this.snippets);
 							this.display();
 						});
 				})
@@ -250,8 +272,8 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 						.setTooltip(i18next.t("Delete"))
 						.onClick(async () => {
 							this.snippets.delete(snippet);
-							this.plugin.saveSettings();
-							this.compiler.reloadStyle();
+							await this.plugin.saveSettings();
+							await this.compiler.reloadStyle(this.snippets);
 							this.display();
 						});
 				});

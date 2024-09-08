@@ -1,4 +1,4 @@
-import { type InternalPluginInstance, sanitizeHTMLToDom, setIcon } from "obsidian";
+import { type InternalPluginInstance, setIcon } from "obsidian";
 import {
 	type Hidden,
 	type ExplorerHiderSettings,
@@ -171,7 +171,7 @@ export class Bookmarks {
 
 		button.addClasses(["bookmark-button", "menu-item", "tappable"]);
 		const svg = button.createDiv({ cls: ["menu-item-icon"] });
-		setIcon(svg, "eye-off")
+		setIcon(svg, "eye-off");
 		const pathName =
 			typeof bookmarkData === "string"
 				? bookmarkData
@@ -200,7 +200,7 @@ export class Bookmarks {
 			};
 			this.plugin.compiler?.updateSnippet(newSnippet, isAlreadyInSet);
 			await this.plugin.saveSettings();
-			this.plugin.compiler?.reloadStyle();
+			await this.plugin.compiler?.reloadStyle();
 		});
 		return button;
 	}
@@ -241,7 +241,7 @@ export class Bookmarks {
 			};
 			this.plugin.compiler.updateSnippet(newSnippet, isAlreadyInSet);
 			await this.plugin.saveSettings();
-			this.plugin.compiler?.reloadStyle();
+			await this.plugin.compiler?.reloadStyle();
 		});
 		return button;
 	}

@@ -16,6 +16,7 @@ export interface Hidden {
 	hiddenInNav: boolean;
 	hiddenInBookmarks: boolean;
 	title?: string; //only used in bookmarks
+	fromObsidian?:boolean;
 }
 
 export const parent = Symbol("parent");
@@ -35,6 +36,7 @@ export interface ExplorerHiderSettings {
 	showAll: boolean;
 	alwaysHideInBookmarks: boolean;
 	buttonInContextBookmark: boolean;
+	obsidianExclude?: boolean;
 }
 
 export const DEFAULT_SETTINGS: ExplorerHiderSettings = {
@@ -44,4 +46,3 @@ export const DEFAULT_SETTINGS: ExplorerHiderSettings = {
 	alwaysHideInBookmarks: false,
 	buttonInContextBookmark: false,
 };
-

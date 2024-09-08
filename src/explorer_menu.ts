@@ -35,7 +35,7 @@ export class ExplorerMenu {
 						isAlreadyInSet.hiddenInBookmarks = false;
 						this.compiler.updateSnippet(isAlreadyInSet);
 						await this.plugin.saveSettings();
-						this.compiler.reloadStyle();
+						await this.compiler.reloadStyle();
 					});
 				return;
 			}
@@ -53,7 +53,7 @@ export class ExplorerMenu {
 					};
 					this.compiler.updateSnippet(newSnippet, isAlreadyInSet);
 					await this.plugin.saveSettings();
-					this.compiler.reloadStyle();
+					await this.compiler.reloadStyle();
 				});
 		});
 	}
@@ -92,7 +92,7 @@ export class ExplorerMenu {
 				isAlreadyInSet.hiddenInNav = false;
 				this.compiler.updateSnippet(isAlreadyInSet);
 				await this.plugin.saveSettings();
-				this.compiler.reloadStyle();
+				await this.compiler.reloadStyle();
 			});
 	}
 
@@ -123,7 +123,7 @@ export class ExplorerMenu {
 				};
 				this.compiler.updateSnippet(newSnippet, isAlreadyInSet);
 				await this.plugin.saveSettings();
-				this.compiler.reloadStyle();
+				await this.compiler.reloadStyle();
 			});
 	}
 
@@ -150,7 +150,7 @@ export class ExplorerMenu {
 							this.compiler.updateSnippet(isAlreadyInSet as Hidden);
 						});
 						await this.plugin.saveSettings();
-						this.compiler.reloadStyle();
+						await this.compiler.reloadStyle();
 					});
 			} else {
 				item
@@ -172,7 +172,7 @@ export class ExplorerMenu {
 							this.compiler.updateSnippet(newSnippet, isAlreadyInSet);
 						});
 						await this.plugin.saveSettings();
-						this.compiler.reloadStyle();
+						await this.compiler.reloadStyle();
 					});
 			}
 		});
