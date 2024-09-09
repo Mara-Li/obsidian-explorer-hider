@@ -1,3 +1,8 @@
+## [1.3.1](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.3.0...1.3.1) (2024-09-09)
+### Bug Fixes
+
+* **urgent:** settings was reset to 0 with new gestion of this.snippets ([2773a2b](https://github.com/Mara-Li/obsidian-explorer-hider/commit/2773a2b949d46373545517fe2d7cd8bbaed37945))
+
 ## [1.3.0](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.2.0...1.3.0) (2024-09-08)
 ### Features
 
