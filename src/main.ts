@@ -11,7 +11,7 @@ import { Bookmarks } from "./bookmarks";
 
 export default class ExplorerHider extends Plugin {
 	settings!: ExplorerHiderSettings;
-	snippets: Set<Hidden> = new Set();
+	snippets!: Set<Hidden>;
 	style: HTMLStyleElement | null = null;
 	compiler!: RulesCompiler;
 	bookmarks: Bookmarks | null = null;
@@ -179,6 +179,7 @@ export default class ExplorerHider extends Plugin {
 
 	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		this.snippets = new Set(this.settings.snippets);
 	}
 	
 	convertObsidianToHidden(): Hidden[] {
@@ -200,8 +201,6 @@ export default class ExplorerHider extends Plugin {
 	}
 
 	async saveSettings() {
-		//prevent duplicate entries
-		this.settings.snippets = Array.from(this.snippets);
 		await this.saveData(this.settings);
 	}
 }
