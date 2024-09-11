@@ -1,3 +1,8 @@
+## [1.3.2](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.3.1...1.3.2) (2024-09-11)
+### Bug Fixes
+
+* new snippets was not saved when updated from explorer ([56fa68a](https://github.com/Mara-Li/obsidian-explorer-hider/commit/56fa68a00b398b81e946d06943ccabf8c2475d9b))
+
 ## [1.3.1](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.3.0...1.3.1) (2024-09-09)
 ### Bug Fixes
 
