@@ -85,6 +85,7 @@ export class RulesCompiler {
 		if (oldSnippet) this.snippets.delete(oldSnippet);
 		this.snippets.delete(newSnippet);
 		this.snippets.add(newSnippet);
+		this.settings.snippets = Array.from(this.snippets);
 	}
 
 	compileBookmarksRules() {
