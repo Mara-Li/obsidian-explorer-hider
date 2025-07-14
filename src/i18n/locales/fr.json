@@ -14,7 +14,7 @@
 	"addNewSnippets": "Ajouter un nouveau snippet",
 	"bookmarksDesc": "Options pour cacher les fichiers dans les signets (si le module principal est activé).",
 	"compatSpf": {
-		"desc": "{{- pluginLink}} ajoutant un attribut {{- datapath}} dans {{- treeInner}}, double toutes les règles pour le prendre en compte. ",
+		"desc": "{{- pluginLink}} ajoutant un attribut {{- datapath}} dans {{- treeInner}}, double toutes les règles pour le prendre en compte (seulement pour les dossiers à la racine). ",
 		"title": "Compatibilité avec le plugin \"Simple Colored Folder\""
 	},
 	"contextMenuButton": "Afficher un bouton dans le menu contextuel des signets",
