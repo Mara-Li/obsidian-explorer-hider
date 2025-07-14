@@ -1,3 +1,8 @@
+## [1.4.0](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.3.2...1.4.0) (2025-07-14)
+### Features
+
+* add compatibility with SPF (or even other plugin with the same effect as SPF) ([3834d94](https://github.com/Mara-Li/obsidian-explorer-hider/commit/3834d942de6515393b33c642effa2034df122d24))
+
 ## [1.3.2](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.3.1...1.3.2) (2024-09-11)
 ### Bug Fixes
 
