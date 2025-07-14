@@ -1,4 +1,4 @@
-import { type App, PluginSettingTab, Setting } from "obsidian";
+import {type App, PluginSettingTab, sanitizeHTMLToDom, Setting} from "obsidian";
 import type ExplorerHider from "./main";
 import { AttributeSelector, type Hidden, type ExplorerHiderSettings } from "./interface";
 import type { RulesCompiler } from "./rules";
@@ -61,6 +61,24 @@ export class ExplorerHiderSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					});
 			});
+		
+		new Setting(containerEl)
+			.setName(i18next.t("compatSpf.title"))
+			.setDesc(sanitizeHTMLToDom(i18next.t("compatSpf.desc", {
+				pluginLink: "<a href='https://github.com/Mara-Li/obsidian-simple-colored-folder'>Simple colored folder</a>",
+				datapath: "<code>data-path</code>",
+				treeInner: "<code>.tree-item.nav-folder</code>",
+			})))
+			.addToggle((toggle) => {
+				toggle
+					.setValue(this.plugin.settings.compatSpf)
+					.onChange(async (value) => {
+						this.plugin.settings.compatSpf = value;
+						await this.compiler.reloadStyle();
+						await this.plugin.saveSettings();
+					});
+			});
+		
 
 		new Setting(containerEl)
 			.setName(i18next.t("Use a css snippet"))

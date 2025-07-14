@@ -83,14 +83,14 @@ Using attribute selectors, you can hide multiple files or folders at once. For e
 
 Each attribute corresponds to:
 
-| Attribute               | CSS    | Description                                                                                            |
-| ----------------------- | ------ | ------------------------------------------------------------------------------------------------------ |
-| Exact                   | `=`    | Exact match with the string                                                                            |
-| Contains                | `*=`   | Contains the string                                                                                    |
-| Ends with               | `$=`   | Ends with the string (suffix)                                                                          |
-| Starts with             | `^=`   | Starts with the string (prefix)                                                                        |
-| List                    | `~=`   | String is a whitespace-separated list of words, one of which matches exactly                           |
-| Text followed by hyphen | `\|=`  | The match can be on exactly the value or can begin with the value immediately followed by a hyphen (`-`) |
+| Attribute               | CSS   | Description                                                                                              |
+|-------------------------|-------|----------------------------------------------------------------------------------------------------------|
+| Exact                   | `=`   | Exact match with the string                                                                              |
+| Contains                | `*=`  | Contains the string                                                                                      |
+| Ends with               | `$=`  | Ends with the string (suffix)                                                                            |
+| Starts with             | `^=`  | Starts with the string (prefix)                                                                          |
+| List                    | `~=`  | String is a whitespace-separated list of words, one of which matches exactly                             |
+| Text followed by hyphen | `\|=` | The match can be on exactly the value or can begin with the value immediately followed by a hyphen (`-`) |
 
 The result will be:
 - For explorer:
@@ -105,9 +105,23 @@ The result will be:
       display: none;
    }
    ```
-
 > [!Note]
 > If the tree for bookmarks and explorer is changed by the Obsidian team, the plugin/snippets will break. I will try to keep it updated, but I can't guarantee it.
+
+### Using the `Simple colored folder` compatibility options
+
+If you are using the [Simple colored folder plugin](https://github.com/Mara-Li/obsidian-simple-colored-folder), you will notice some issues with the hidden folders, mainly spacing. 
+This option will add a new rule according to the plugin behavior to fix the spacing:
+```css
+.tree-item.nav-folder[data-path{selector}="path" {
+	display: none;
+}
+```
+
+It should be inoffensive for non-user of Simple colored folder (as only this plugin add the attribute to `.tree-item.nav-folder`), the options is not enabled by default.
+
+> [!NOTE]
+> This options is **not tied** with the installation of the Simple colored folder plugin, so you can enable it even if you don't use the plugin.
 
 ## 📥 Installation
 

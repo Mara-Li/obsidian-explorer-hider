@@ -32,6 +32,7 @@ export type BookmarkInternalData = {
 
 export interface ExplorerHiderSettings {
 	useSnippets: boolean;
+	compatSpf: boolean;
 	snippets: Hidden[];
 	showAll: boolean;
 	alwaysHideInBookmarks: boolean;
@@ -41,6 +42,7 @@ export interface ExplorerHiderSettings {
 
 export const DEFAULT_SETTINGS: ExplorerHiderSettings = {
 	useSnippets: false,
+	compatSpf: false,
 	showAll: false,
 	snippets: [],
 	alwaysHideInBookmarks: false,

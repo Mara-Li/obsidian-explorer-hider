@@ -13,6 +13,10 @@
 	"Use a css snippet": "Utiliser un snippet css",
 	"addNewSnippets": "Ajouter un nouveau snippet",
 	"bookmarksDesc": "Options pour cacher les fichiers dans les signets (si le module principal est activé).",
+	"compatSpf": {
+		"desc": "{{- pluginLink}} ajoutant un attribut {{- datapath}} dans {{- treeInner}}, double toutes les règles pour le prendre en compte. ",
+		"title": "Compatibilité avec le plugin \"Simple Colored Folder\""
+	},
 	"contextMenuButton": "Afficher un bouton dans le menu contextuel des signets",
 	"contextMenuButtonDesc": "Permet de cacher/afficher un fichier dans les signets à partir du menu des signets. Attention, fonctionnalité expérimentale !",
 	"disabled": "Le module \"signet\" est désactivé : cette option est donc désactivée",

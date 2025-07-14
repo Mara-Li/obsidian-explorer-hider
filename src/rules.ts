@@ -27,7 +27,9 @@ export class RulesCompiler {
 		const selectorChar = selector ? selector : "^";
 		if (snippet.type === "folder") {
 			if (!hidden || this.settings.showAll) return;
-			return `.nav-folder-title[data-path${selectorChar}="${path}"], .nav-folder-title[data-path${selectorChar}="${path}"] + .nav-folder-children, `;
+			return `.nav-folder-title[data-path${selectorChar}="${path}"], .nav-folder-title[data-path${selectorChar}="${path}"] + .nav-folder-children,
+			  .tree-item.nav-folder[data-path${selectorChar}="${path}"],
+			`;
 		} else if (snippet.type === "file") {
 			return `.nav-file [data-path="${path}"], `;
 		} else {
