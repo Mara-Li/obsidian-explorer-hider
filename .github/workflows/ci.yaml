@@ -20,28 +20,6 @@ permissions:
     contents: write
 
 jobs:
-    echo:
-        runs-on: ubuntu-latest
-        outputs:
-            STYLE: ${{ fromJson(steps.style.outputs.STYLE) }}
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-            - name: echo
-              run: |
-                  echo EVENT NAME =  ${{ github.event_name }}
-                  echo BETA = ${{ inputs.beta || false}}
-                  echo BUMP = ${{ inputs.bump || false}}
-            - name: Style exists
-              id: style
-              run: |
-                  echo "STYLE=false" >> "$GITHUB_OUTPUT"
-                  if [[ -f "styles.css" || -f "src/styles.css" ]]; then
-                    echo "STYLE=true" >> "$GITHUB_OUTPUT"
-                  else
-                    echo "STYLE=false" >> "$GITHUB_OUTPUT"
-                  fi
-
     release:
         if: (github.event_name == 'push') || (github.event_name == 'workflow_dispatch' && !inputs.bump)
         uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-release.yaml@main
@@ -49,7 +27,7 @@ jobs:
 
         with:
             PLUGIN_NAME: explorer-hider
-            CACHE: "pnpm"
+            CACHE: "bun"
         secrets:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -59,7 +37,7 @@ jobs:
         uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-bump-version.yaml@main
         with:
             PLUGIN_NAME: explorer-hider
-            BETA: ${{ inputs.beta }}
-            CACHE: "pnpm"
+            BETA: ${{ inputs.beta || false}}
+            CACHE: "bun"
         secrets:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
