@@ -1,3 +1,9 @@
+## [1.4.1](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.4.0...1.4.1) (2025-07-14)
+### Bug Fixes
+
+* better compatibility with SPF with taking into account that only the first root folder have the data-attribute ([6d18244](https://github.com/Mara-Li/obsidian-explorer-hider/commit/6d182448d7b7776e5a74a051e5f17a46c2839c1c))
+* forgot to use the settings for spf compat ([3dce9c0](https://github.com/Mara-Li/obsidian-explorer-hider/commit/3dce9c011fcf872097d1997f9e343b769d0ce950))
+
 ## [1.4.0](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.3.2...1.4.0) (2025-07-14)
 ### Features
 

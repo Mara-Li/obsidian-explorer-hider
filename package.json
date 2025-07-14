@@ -1,6 +1,6 @@
 {
   "name": "explorer-hider",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Hide a file/folder from the explorer with only a bit of CSS.",
   "main": "main.js",
   "scripts": {
