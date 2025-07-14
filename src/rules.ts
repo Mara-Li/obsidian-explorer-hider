@@ -25,10 +25,10 @@ export class RulesCompiler {
 	createRuleFolderTitle(snippet: Hidden): string | undefined {
 		const { path, hiddenInNav: hidden, selector } = snippet;
 		const selectorChar = selector ? selector : "^";
+		const spfCompat = this.settings.compatSpf ? `.tree-item.nav-folder[data-path${selectorChar}="${path}"], `:""
 		if (snippet.type === "folder") {
 			if (!hidden || this.settings.showAll) return;
-			return `.nav-folder-title[data-path${selectorChar}="${path}"], .nav-folder-title[data-path${selectorChar}="${path}"] + .nav-folder-children,
-			  .tree-item.nav-folder[data-path${selectorChar}="${path}"],
+			return `.nav-folder-title[data-path${selectorChar}="${path}"], .nav-folder-title[data-path${selectorChar}="${path}"] + .nav-folder-children, ${spfCompat}
 			`;
 		} else if (snippet.type === "file") {
 			return `.nav-file [data-path="${path}"], `;
