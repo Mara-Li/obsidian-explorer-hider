@@ -23,7 +23,6 @@ jobs:
     release:
         if: (github.event_name == 'push') || (github.event_name == 'workflow_dispatch' && !inputs.bump)
         uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-release.yaml@main
-        needs: echo
 
         with:
             PLUGIN_NAME: explorer-hider
@@ -33,7 +32,6 @@ jobs:
 
     bump-version-and-release:
         if: ${{ inputs.bump }}
-        needs: echo
         uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-bump-version.yaml@main
         with:
             PLUGIN_NAME: explorer-hider
