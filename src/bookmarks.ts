@@ -1,22 +1,23 @@
-import { type InternalPluginInstance, setIcon } from "obsidian";
+import i18next from "i18next";
+import { setIcon } from "obsidian";
+import type {BookmarksPluginInstance} from "obsidian-typings";
 import {
-	type Hidden,
-	type ExplorerHiderSettings,
-	type Items,
-	type BookmarkInternalData,
 	AttributeSelector,
+	type BookmarkInternalData,
+	type ExplorerHiderSettings,
+	type Hidden,
+	type Items,
 } from "./interface";
 import type ExplorerHider from "./main";
-import i18next from "i18next";
 
 export class Bookmarks {
 	plugin: ExplorerHider;
 	settings: ExplorerHiderSettings;
-	bookmarksPlugin: InternalPluginInstance;
+	bookmarksPlugin: BookmarksPluginInstance;
 	// biome-ignore lint/correctness/noUndeclaredVariables: obsidian global variable
 	activeDocument: Document = activeDocument;
 
-	constructor(plugin: ExplorerHider, bookMarks: InternalPluginInstance) {
+	constructor(plugin: ExplorerHider, bookMarks: BookmarksPluginInstance) {
 		this.plugin = plugin;
 		this.settings = plugin.settings;
 		this.bookmarksPlugin = bookMarks;
@@ -58,8 +59,7 @@ export class Bookmarks {
 
 	getTargetBookMarkData(name?: string) {
 		if (!name) return;
-		//@ts-ignore
-		const allBookMarksItem = this.bookmarksPlugin.items;
+		const allBookMarksItem = this.bookmarksPlugin.getBookmarks() as BookmarkInternalData[];
 		//if group => file will be in items[] as array! Wee need to recursively search
 		for (const bookmark of allBookMarksItem) {
 			if (bookmark.title === name || bookmark.path === name) return bookmark;

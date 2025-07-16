@@ -1,3 +1,5 @@
+import type {BookmarkItem} from "obsidian-typings";
+
 export type Items = "file" | "folder" | "string";
 
 export enum AttributeSelector {
@@ -21,10 +23,8 @@ export interface Hidden {
 
 export const parent = Symbol("parent");
 
-export type BookmarkInternalData = {
-	ctime: number;
+export type BookmarkInternalData = BookmarkItem & {
 	path?: string;
-	type: string;
 	title?: string;
 	items?: BookmarkInternalData[];
 	[parent]?: BookmarkInternalData | null;

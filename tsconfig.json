@@ -16,6 +16,7 @@
 		"isolatedModules": true,
 		"resolveJsonModule": true,
 		"strictNullChecks": true,
+		"types": ["obsidian-typings"],
 		"lib": [
 			"DOM",
 			"ES5",
