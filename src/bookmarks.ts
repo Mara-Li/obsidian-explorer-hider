@@ -1,6 +1,6 @@
 import i18next from "i18next";
 import { setIcon } from "obsidian";
-import type {BookmarksPluginInstance} from "obsidian-typings";
+import type { BookmarksPluginInstance } from "obsidian-typings";
 import {
 	AttributeSelector,
 	type BookmarkInternalData,
@@ -59,7 +59,8 @@ export class Bookmarks {
 
 	getTargetBookMarkData(name?: string) {
 		if (!name) return;
-		const allBookMarksItem = this.bookmarksPlugin.getBookmarks() as BookmarkInternalData[];
+		const allBookMarksItem =
+			this.bookmarksPlugin.getBookmarks() as BookmarkInternalData[];
 		//if group => file will be in items[] as array! Wee need to recursively search
 		for (const bookmark of allBookMarksItem) {
 			if (bookmark.title === name || bookmark.path === name) return bookmark;
@@ -129,12 +130,19 @@ export class Bookmarks {
 			button.addEventListener("mouseout", () => {
 				button.classList.remove("selected");
 			});
-			const openedMenu = this.activeDocument.querySelectorAll(".menu");
-			if (!openedMenu) return;
-			for (const menu of openedMenu) {
-				menu.createDiv({ cls: ["menu-separator", "explorer-hider"] });
-				menu.appendChild(button);
-			}
+
+			setTimeout(() => {
+				const openedMenu = this.activeDocument.querySelectorAll(".menu-scroll");
+				if (!openedMenu) return;
+				for (const menu of openedMenu) {
+					const separator = menu.querySelector(".menu-separator.explorer-hider");
+					if (separator) separator.remove();
+					menu.createDiv({ cls: "menu-separator explorer-hider" });
+					menu.appendChild(button);
+				}
+			}, 2);
+			//clear
+			this.removeButtonFromPanel();
 		});
 	}
 
@@ -175,7 +183,7 @@ export class Bookmarks {
 		const pathName =
 			typeof bookmarkData === "string"
 				? bookmarkData
-				: bookmarkData.path ?? bookmarkData.title ?? "";
+				: (bookmarkData.path ?? bookmarkData.title ?? "");
 		const title = typeof bookmarkData === "string" ? undefined : bookmarkData.title;
 		const name = button.createDiv({
 			text: i18next.t("hide.bookmarksWithName", {
@@ -185,7 +193,7 @@ export class Bookmarks {
 		});
 		const type = this.bookmarkType(bookmarkData);
 		const selector =
-			isAlreadyInSet?.selector ?? type === "string"
+			(isAlreadyInSet?.selector ?? type === "string")
 				? AttributeSelector.StartsWith
 				: undefined;
 		button.appendChild(name);
@@ -216,7 +224,7 @@ export class Bookmarks {
 		const pathName =
 			typeof bookmarkData === "string"
 				? bookmarkData
-				: bookmarkData.path ?? bookmarkData.title ?? "";
+				: (bookmarkData.path ?? bookmarkData.title ?? "");
 		const title = typeof bookmarkData === "string" ? undefined : bookmarkData.title;
 		const name = button.createDiv({
 			text: i18next.t("show.bookmarksWithName", {
@@ -226,7 +234,7 @@ export class Bookmarks {
 		});
 		const type = this.bookmarkType(bookmarkData);
 		const selector =
-			isAlreadyInSet.selector ?? type === "string"
+			(isAlreadyInSet.selector ?? type === "string")
 				? AttributeSelector.StartsWith
 				: undefined;
 		button.appendChild(name);

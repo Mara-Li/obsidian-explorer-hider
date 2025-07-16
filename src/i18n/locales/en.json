@@ -18,7 +18,7 @@
 		"title": "Compatibility with Simple Colored Folder plugin"
 	},
 	"contextMenuButton": "Show a button in the bookmarks context menu",
-	"contextMenuButtonDesc": "Allows you to hide/show a file in bookmarks from the bookmarks menu. \nWarning, experimental feature!",
+	"contextMenuButtonDesc": "Allows you to hide/show a file in bookmarks from the bookmarks menu. \nWarning, experimental feature!\nBroken with duplicate bookmarks in the same folder.",
 	"disabled": "",
 	"excludedFiles": {
 		"desc": "Automatically hide the excluded files from Obsidian Settings",

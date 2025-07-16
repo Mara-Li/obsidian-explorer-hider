@@ -18,7 +18,7 @@
 		"title": "Compatibilité avec le plugin \"Simple Colored Folder\""
 	},
 	"contextMenuButton": "Afficher un bouton dans le menu contextuel des signets",
-	"contextMenuButtonDesc": "Permet de cacher/afficher un fichier dans les signets à partir du menu des signets. Attention, fonctionnalité expérimentale !",
+	"contextMenuButtonDesc": "Permet de cacher/afficher un fichier dans les signets à partir du menu des signets. Attention, fonctionnalité expérimentale !\nNe fonctionne pas sur les signets dupliqués dans le même dossier.",
 	"disabled": "Le module \"signet\" est désactivé : cette option est donc désactivée",
 	"excludedFiles": {
 		"desc": "Cache automatiquement les fichiers exclus depuis les paramètres d'Obsidian",

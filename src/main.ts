@@ -1,13 +1,12 @@
-import { type Menu, Plugin, type TAbstractFile, TFile, setIcon } from "obsidian";
-import { around } from "monkey-around";
-
-import { ExplorerHiderSettingTab } from "./settings";
-import { type ExplorerHiderSettings, DEFAULT_SETTINGS, type Hidden } from "./interface";
-import { ExplorerMenu } from "./explorer_menu";
-import { RulesCompiler } from "./rules";
 import i18next from "i18next";
-import { resources, translationLanguage } from "./i18n";
+import { around } from "monkey-around";
+import { type Menu, Plugin, setIcon, type TAbstractFile, TFile } from "obsidian";
 import { Bookmarks } from "./bookmarks";
+import { ExplorerMenu } from "./explorer_menu";
+import { resources, translationLanguage } from "./i18n";
+import { DEFAULT_SETTINGS, type ExplorerHiderSettings, type Hidden } from "./interface";
+import { RulesCompiler } from "./rules";
+import { ExplorerHiderSettingTab } from "./settings";
 
 export default class ExplorerHider extends Plugin {
 	settings!: ExplorerHiderSettings;
@@ -58,8 +57,6 @@ export default class ExplorerHider extends Plugin {
 			},
 		});
 	}
-	
-	
 
 	async onload() {
 		console.log(`[${this.manifest.name}] loaded`);
@@ -154,9 +151,8 @@ export default class ExplorerHider extends Plugin {
 	async loadBookmarks() {
 		if (!this.settings.buttonInContextBookmark) return;
 		const bookmarksPlugin = this.app.internalPlugins.getEnabledPluginById("bookmarks");
-		if (!bookmarksPlugin) {
-			return;
-		}
+		if (!bookmarksPlugin) return;
+
 		this.bookmarks = new Bookmarks(this, bookmarksPlugin);
 		await this.bookmarks.addButtonToPanel();
 		console.log(`[${this.manifest.name}] loaded bookmarks`);
@@ -181,14 +177,16 @@ export default class ExplorerHider extends Plugin {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
 		this.snippets = new Set(this.settings.snippets);
 	}
-	
+
 	convertObsidianToHidden(): Hidden[] {
 		const userIgnoreFilters = this.app.vault.config.userIgnoreFilters;
 		if (!this.settings.obsidianExclude || !userIgnoreFilters) return [];
 		const snippets: Hidden[] = [];
 		for (const exclude of userIgnoreFilters) {
 			const type = exclude.endsWith("/") ? "folder" : "file";
-			const hideInBookmarks = this.settings.alwaysHideInBookmarks && this.app.internalPlugins.getEnabledPluginById("bookmarks") !== null;
+			const hideInBookmarks =
+				this.settings.alwaysHideInBookmarks &&
+				this.app.internalPlugins.getEnabledPluginById("bookmarks") !== null;
 			snippets.push({
 				path: exclude.replace(/\/$/, ""),
 				type,
