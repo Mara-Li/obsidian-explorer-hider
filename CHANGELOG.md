@@ -1,3 +1,9 @@
+## [1.4.2](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.4.1...1.4.2) (2025-07-16)
+### Bug Fixes
+
+* broken bookmarks button ([b75a1d9](https://github.com/Mara-Li/obsidian-explorer-hider/commit/b75a1d950bba5b5fa589435d8cfc249cba4a470a))
+* changing typing broke build ([aac1a0f](https://github.com/Mara-Li/obsidian-explorer-hider/commit/aac1a0f0be775dc9c2ba872f3f0fdb33c075fcc1))
+
 ## [1.4.1](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.4.0...1.4.1) (2025-07-14)
 ### Bug Fixes
 
