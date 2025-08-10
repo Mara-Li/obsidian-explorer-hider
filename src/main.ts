@@ -199,6 +199,7 @@ export default class ExplorerHider extends Plugin {
 	}
 
 	async saveSettings() {
+		this.settings.snippets = Array.from(this.snippets);
 		await this.saveData(this.settings);
 	}
 }
