@@ -1,3 +1,8 @@
+## [1.4.3](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.4.2...1.4.3) (2025-08-10)
+### Bug Fixes
+
+* settings not saved ([9a8bd83](https://github.com/Mara-Li/obsidian-explorer-hider/commit/9a8bd8334f6d2ba9fc2015a7eeeee32e2bf743d3)), closes [#3](https://github.com/Mara-Li/obsidian-explorer-hider/issues/3)
+
 ## [1.4.2](https://github.com/Mara-Li/obsidian-explorer-hider/compare/1.4.1...1.4.2) (2025-07-16)
 ### Bug Fixes
 
