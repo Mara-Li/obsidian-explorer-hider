@@ -23,3 +23,5 @@ data.json
 .DS_Store
 .env
 .hotreload
+./dist
+/dist/manifest.json
